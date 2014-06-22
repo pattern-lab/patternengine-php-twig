@@ -1,0 +1,23 @@
+{
+	"name":             "PatternLab/TwigPatternEngine",
+	"description":      "Twig-based Pattern Engine for the PHP version of Pattern Lab",
+	"keywords":         ["twig", "pattern lab", "pattern engine"],
+	"homepage":         "http://patternlab.io",
+	"license":          "MIT",
+	"authors": [
+		{
+			"name":         "Dave Olsen",
+			"email":        "dmolsen@gmail.com",
+			"homepage":     "http://dmolsen.com",
+			"role":         "Lead Developer"
+		}
+	],
+	"autoload": {
+		"psr-0": {
+			"PatternLab\\TwigPatternEngine": "src/"
+		}
+	},
+	"require": {
+		"twig/twig": "v1.15.1"
+	}
+}
