@@ -28,8 +28,10 @@
 		"twig/twig":      "v1.15.1"
 	},
 	"extra": {
-		"config": [
-			{ "patternExtension": "twig" }
-		]
+		"patternlab": {
+			"config": [
+				{ "patternExtension": "twig" }
+			]
+		}
 	}
 }
