@@ -13,9 +13,9 @@
 
 namespace PatternLab\TwigPatternEngine;
 
-use \PatternLab\PatternEngine\Loader;
+use \PatternLab\PatternEngine\Util;
 
-class TwigLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface {
+class PatternLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface {
 	
 	/** Identifier of the main namespace. */
 	const MAIN_NAMESPACE = '__main__';
@@ -35,7 +35,10 @@ class TwigLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface {
 			$this->setPaths($paths);
 		}
 		$options['patternPaths'] = $patternPaths['patternPaths'];
-		$this->patternLoader = new Loader($options);
+		
+		// load some extra functions to help with manipulating pattern info
+		$this->patternUtil = new Util($options);
+		
 	}
 	
 	/**
@@ -165,9 +168,9 @@ class TwigLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface {
 	
 	protected function findTemplate($name) {
 		
-		list($partialName,$styleModifier,$parameters) = $this->patternLoader->getPartialInfo($name);
+		list($partialName,$styleModifier,$parameters) = $this->patternUtil->getPartialInfo($name);
 		
-		$name = $this->patternLoader->getFileName($partialName,$this->extension);
+		$name = $this->patternUtil->getFileName($partialName,$this->extension);
 		
 		$name = $this->normalizeName($name);
 		
