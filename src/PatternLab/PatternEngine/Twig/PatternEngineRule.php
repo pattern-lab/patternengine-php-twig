@@ -46,7 +46,7 @@ class PatternEngineRule extends Rule {
 	*/
 	public function getFileSystemLoader($options = array()) {
 		
-		$twigLoader = new Twig_Loader_Filesystem($options["templatePath"]);
+		$twigLoader = new Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"]));
 		
 		return new \Twig_Environment($twigLoader);
 		
