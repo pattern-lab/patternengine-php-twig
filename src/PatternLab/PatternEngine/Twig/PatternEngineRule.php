@@ -33,7 +33,10 @@ class PatternEngineRule extends Rule {
 	*/
 	public function getPatternLoader($options = array()) {
 		
-		$twigLoader = new PatternLoader(Config::$options["patternSourceDir"],array("patternPaths" => $options["patternPaths"]));
+		//default var
+		$patternSourceDir = Config::getOption("patternSourceDir");
+		
+		$twigLoader = new PatternLoader($patternSourceDir,array("patternPaths" => $options["patternPaths"]));
 		
 		return new \Twig_Environment($twigLoader);
 		
