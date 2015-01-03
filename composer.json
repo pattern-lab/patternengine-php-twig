@@ -1,5 +1,5 @@
 {
-	"name":             "pattern-lab/patternengine-php-twig",
+	"name":             "pattern-lab/patternengine-twig",
 	"description":      "Twig-based Pattern Engine for the PHP version of Pattern Lab",
 	"keywords":         ["twig", "pattern lab", "pattern engine"],
 	"homepage":         "http://patternlab.io",
