@@ -34,7 +34,7 @@ class FilesystemLoader extends Loader {
 	*/
 	public function render($options = array()) {
 		
-		return $this->instance->render($options["template"], $options["data"]);
+		return $this->instance->render($options["template"].".twig", $options["data"]);
 		
 	}
 	
