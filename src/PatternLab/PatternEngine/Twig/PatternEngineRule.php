@@ -21,7 +21,7 @@ class PatternEngineRule extends Rule {
 		parent::__construct();
 		
 		$this->engineProp = "twig";
-		$this->basePath   = "\PatternLab\PatternEngine\Mustache";
+		$this->basePath   = "\PatternLab\PatternEngine\Twig";
 		
 	}
 	
