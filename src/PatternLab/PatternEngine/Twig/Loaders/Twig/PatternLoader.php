@@ -11,7 +11,7 @@
  *
  */
 
-namespace PatternLab\TwigPatternEngine;
+namespace PatternLab\PatternEngine\Twig\Loaders\Twig;
 
 use \PatternLab\PatternEngine\Util;
 
