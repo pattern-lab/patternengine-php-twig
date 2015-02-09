@@ -4,7 +4,7 @@ The Twig PatternEngine allows you to use [Twig](http://twig.sensiolabs.org) as t
 
 ## Installation
 
-Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project dependencies. To install the default static assets run:
+Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project dependencies. To install the Twig PatternEngine:
 
     composer require pattern-lab/patternengine-twig
 
