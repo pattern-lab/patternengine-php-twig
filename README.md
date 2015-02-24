@@ -41,9 +41,9 @@ The pattern loader looks for patterns and allows the use of the Pattern Lab-spec
 
 ```php
 $data                  = array(...);
-$patternPath           = "path/to/pattern";
+$patternContent        = file_get_contents("path/to/pattern");
 $patternEngineBasePath = \PatternLab\PatternEngine::getInstance()->getBasePath();
 $patternLoaderClass    = $patternEngineBasePath."\Loaders\PatternLoader";
 $patternLoader         = new $patternLoaderClass($options);
-$code                  = $patternLoader->render(array("pattern" => $patternPath, "data" => $data));
+$code                  = $patternLoader->render(array("pattern" => $patternContent, "data" => $data));
 print $output; // outputs the given pattern
