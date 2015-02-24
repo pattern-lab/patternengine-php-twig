@@ -15,7 +15,7 @@ namespace PatternLab\PatternEngine\Twig\Loaders\Twig;
 
 use \PatternLab\PatternEngine\Util;
 
-class PatternLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface {
+class PatternPartialLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface {
 	
 	/** Identifier of the main namespace. */
 	const MAIN_NAMESPACE = '__main__';
