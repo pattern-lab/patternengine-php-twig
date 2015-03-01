@@ -12,7 +12,9 @@
 
 namespace PatternLab\PatternEngine\Twig\Loaders;
 
+use \PatternLab\Config;
 use \PatternLab\PatternEngine\Loader;
+use \PatternLab\PatternEngine\Twig\TwigUtil;
 
 class FilesystemLoader extends Loader {
 	
@@ -23,6 +25,7 @@ class FilesystemLoader extends Loader {
 		
 		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"]));
 		$this->instance = new \Twig_Environment($twigLoader);
+		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
 		
 	}
 	
@@ -34,7 +37,7 @@ class FilesystemLoader extends Loader {
 	*/
 	public function render($options = array()) {
 		
-		return $this->instance->render($options["template"].".twig", $options["data"]);
+		return $this->instance->render($options["template"].".".Config::getOption("patternExtension"), $options["data"]);
 		
 	}
 	

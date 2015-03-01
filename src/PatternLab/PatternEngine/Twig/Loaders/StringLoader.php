@@ -13,6 +13,7 @@
 namespace PatternLab\PatternEngine\Twig\Loaders;
 
 use \PatternLab\PatternEngine\Loader;
+use \PatternLab\PatternEngine\Twig\TwigUtil;
 
 class StringLoader extends Loader {
 	
@@ -23,6 +24,7 @@ class StringLoader extends Loader {
 		
 		$twigLoader     = new \Twig_Loader_String();
 		$this->instance = new \Twig_Environment($twigLoader);
+		$this->instance = TwigUtil::loadMacros($this->instance, "string");
 		
 	}
 	
