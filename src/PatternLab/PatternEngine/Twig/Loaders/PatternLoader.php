@@ -28,9 +28,11 @@ class PatternLoader extends Loader {
 		
 		//default var
 		$patternSourceDir     = Config::getOption("patternSourceDir");
+		$macroPath            = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
 		$patternPartialLoader = new Twig_Loader_PatternPartialLoader($patternSourceDir,array("patternPaths" => $options["patternPaths"]));
 		$patternStringLoader  = new \Twig_Loader_String();
-		$twigLoader           = new \Twig_Loader_Chain(array($patternPartialLoader, $patternStringLoader));
+		$macroLoader          = new \Twig_Loader_Filesystem(array($macroPath));
+		$twigLoader           = new \Twig_Loader_Chain(array($patternPartialLoader, $macroLoader, $patternStringLoader));
 		$this->instance       = new \Twig_Environment($twigLoader);
 		$this->instance       = TwigUtil::loadMacros($this->instance, "pattern");
 		

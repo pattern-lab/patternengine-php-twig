@@ -23,7 +23,8 @@ class FilesystemLoader extends Loader {
 	*/
 	public function __construct($options = array()) {
 		
-		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"]));
+		$macroPath      = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
+		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"],$macroPath));
 		$this->instance = new \Twig_Environment($twigLoader);
 		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
 		
