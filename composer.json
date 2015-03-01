@@ -31,7 +31,8 @@
 		"patternlab": {
 			"config": [
 				{ 
-					"patternExtension": "twig"
+					"patternExtension": "twig",
+					"twigDebug": false,
 					"twigDefaultDateFormat": "",
 					"twigDefaultIntervalFormat": "",
 					"twigMacroExt": "macro"

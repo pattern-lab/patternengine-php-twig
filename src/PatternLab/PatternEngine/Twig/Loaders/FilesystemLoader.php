@@ -23,11 +23,16 @@ class FilesystemLoader extends Loader {
 	*/
 	public function __construct($options = array()) {
 		
+		// set-up the loader
+		$twigDebug      = Config::getOption("twigDebug");
 		$macroPath      = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
 		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"],$macroPath));
-		$this->instance = new \Twig_Environment($twigLoader);
-		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
+		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		
+		// customize the loader
 		$this->instance = TwigUtil::loadDateFormats();
+		$this->instance = TwigUtil::loadDebug();
+		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
 		
 	}
 	

@@ -34,6 +34,23 @@ class TwigUtil {
 		}
 		
 		return $instance;
+		
+	}
+	
+	/**
+	* Enable the debug options for Twig
+	* @param  {Instance}       an instance of the twig engine
+	*
+	* @return {Instance}       an instance of the twig engine
+	*/
+	public static function loadDebug($instance) {
+		
+		if (Config::getOption("twigDebug")) {
+			$twig->addExtension(new Twig_Extension_Debug());
+		}
+		
+		return $instance;
+		
 	}
 	
 	/**
