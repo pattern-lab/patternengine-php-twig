@@ -27,6 +27,7 @@ class FilesystemLoader extends Loader {
 		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"],$macroPath));
 		$this->instance = new \Twig_Environment($twigLoader);
 		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
+		$this->instance = TwigUtil::loadDateFormats();
 		
 	}
 	

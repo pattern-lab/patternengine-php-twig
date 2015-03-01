@@ -19,6 +19,24 @@ use \Symfony\Component\Finder\Finder;
 class TwigUtil {
 	
 	/**
+	* Load custom date formats for Twig
+	* @param  {Instance}       an instance of the twig engine
+	*
+	* @return {Instance}       an instance of the twig engine
+	*/
+	public static function loadDateFormats($instance) {
+		
+		$dateFormat     = Config::getOption("twigDefaultDateFormat");
+		$intervalFormat = Config::getOption("twigDefaultIntervalFormat");
+		
+		if ($dateFormat && $intervalFormat) {
+			$instance->getExtension('core')->setDateFormat($dateFormat, $intervalFormat);
+		}
+		
+		return $instance;
+	}
+	
+	/**
 	* Load macros for the Twig PatternEngine
 	* @param  {Instance}       an instance of the twig engine
 	* @param  {String}         description of the loader type for the error

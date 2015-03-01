@@ -29,6 +29,7 @@ class StringLoader extends Loader {
 		$twigLoader     = new \Twig_Loader_Chain(array($macroLoader, $stringLoader));
 		$this->instance = new \Twig_Environment($twigLoader);
 		$this->instance = TwigUtil::loadMacros($this->instance, "string");
+		$this->instance = TwigUtil::loadDateFormats();
 		
 	}
 	

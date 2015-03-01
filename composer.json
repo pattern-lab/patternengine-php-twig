@@ -32,6 +32,8 @@
 			"config": [
 				{ 
 					"patternExtension": "twig"
+					"twigDefaultDateFormat": "",
+					"twigDefaultIntervalFormat": "",
 					"twigMacroExt": "macro"
 				}
 			]

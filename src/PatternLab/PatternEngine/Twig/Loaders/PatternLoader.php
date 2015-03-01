@@ -35,6 +35,7 @@ class PatternLoader extends Loader {
 		$twigLoader           = new \Twig_Loader_Chain(array($patternPartialLoader, $macroLoader, $patternStringLoader));
 		$this->instance       = new \Twig_Environment($twigLoader);
 		$this->instance       = TwigUtil::loadMacros($this->instance, "pattern");
+		$this->instance       = TwigUtil::loadDateFormats();
 		
 	}
 	
