@@ -29,8 +29,8 @@ class TwigUtil {
 		$dateFormat     = Config::getOption("twigDefaultDateFormat");
 		$intervalFormat = Config::getOption("twigDefaultIntervalFormat");
 		
-		if ($dateFormat && $intervalFormat) {
-			$instance->getExtension('core')->setDateFormat($dateFormat, $intervalFormat);
+		if ($dateFormat && $intervalFormat && !empty($dateFormat) && !empty($intervalFormat)) {
+			$instance->getExtension("core")->setDateFormat($dateFormat, $intervalFormat);
 		}
 		
 		return $instance;
