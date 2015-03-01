@@ -30,7 +30,9 @@
 	"extra": {
 		"patternlab": {
 			"config": [
-				{ "patternExtension": "twig" }
+				{ 
+					"patternExtension": "twig"
+				}
 			]
 		}
 	}
