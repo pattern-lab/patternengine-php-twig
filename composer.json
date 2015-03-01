@@ -32,6 +32,7 @@
 			"config": [
 				{ 
 					"patternExtension": "twig"
+					"twigMacroExt": "macro"
 				}
 			]
 		}
