@@ -39,7 +39,7 @@ class TwigUtil {
 			$finder->files()->name("*.".$macroExt)->in($macroDir);
 			$finder->sortByName();
 			foreach ($finder as $file) {
-				$instance->addGlobal($file->getBasename($macroExt), $twig->loadTemplate($file->getRealPath()));
+				$instance->addGlobal($file->getBasename(".".$macroExt), $instance->loadTemplate($file->getBasename()));
 			}
 			
 		} else {
