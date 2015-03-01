@@ -46,7 +46,7 @@ class TwigUtil {
 	public static function loadDebug($instance) {
 		
 		if (Config::getOption("twigDebug")) {
-			$twig->addExtension(new Twig_Extension_Debug());
+			$instance->addExtension(new \Twig_Extension_Debug());
 		}
 		
 		return $instance;
