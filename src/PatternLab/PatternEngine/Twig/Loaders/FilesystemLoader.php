@@ -30,8 +30,8 @@ class FilesystemLoader extends Loader {
 		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
 		
 		// customize the loader
-		$this->instance = TwigUtil::loadDateFormats();
-		$this->instance = TwigUtil::loadDebug();
+		$this->instance = TwigUtil::loadDateFormats($this->instance);
+		$this->instance = TwigUtil::loadDebug($this->instance);
 		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
 		
 	}
