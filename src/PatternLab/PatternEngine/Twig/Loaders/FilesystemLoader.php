@@ -12,7 +12,9 @@
 
 namespace PatternLab\PatternEngine\Twig\Loaders;
 
+use \PatternLab\Config;
 use \PatternLab\PatternEngine\Loader;
+use \PatternLab\PatternEngine\Twig\TwigUtil;
 
 class FilesystemLoader extends Loader {
 	
@@ -21,8 +23,16 @@ class FilesystemLoader extends Loader {
 	*/
 	public function __construct($options = array()) {
 		
-		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"]));
-		$this->instance = new \Twig_Environment($twigLoader);
+		// set-up the loader
+		$twigDebug      = Config::getOption("twigDebug");
+		$macroPath      = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
+		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"],$macroPath));
+		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		
+		// customize the loader
+		$this->instance = TwigUtil::loadDateFormats($this->instance);
+		$this->instance = TwigUtil::loadDebug($this->instance);
+		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
 		
 	}
 	
@@ -34,7 +44,7 @@ class FilesystemLoader extends Loader {
 	*/
 	public function render($options = array()) {
 		
-		return $this->instance->render($options["template"].".twig", $options["data"]);
+		return $this->instance->render($options["template"].".".Config::getOption("patternExtension"), $options["data"]);
 		
 	}
 	

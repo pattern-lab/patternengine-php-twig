@@ -8,6 +8,18 @@ Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project depe
 
     composer require pattern-lab/patternengine-twig
 
+## Using Twig Macros
+
+The Twig PatternEngine will automatically find and load Twig macros making them available to every pattern. To use this feature add your `.macro` files to `source/_macros/`. If your macro file is called `forms.macro` and it has a macro called `input()` you'd access it in your Twig templates as `{{ forms.input() }}`. **Please note:** ensure that there is no overlap between the keys for your macros and the keys for your data attributes.
+
+## Enabling `dump()`
+
+To use `dump()` set `twigDebug` in `configs/config.yml` to `true`.
+
+## Modifying the Default Date and Interval Format
+
+You can modify the default date and interval formats for Twig by editing the `twigDefaultDateFormat` and `twigDefaultIntervalFormat` in `configs/config.yml`. Set them to an empty string to use Twig's default formats. **Please note:** both must be set for this feature to work.
+
 ## Available Loaders
 
 If you're building a plugin that will be parsing Twig files you have access to three loaders. It's recommended that you use these instead of accessing Twig directly as these loaders will work with other PatternEngines.
@@ -41,9 +53,9 @@ The pattern loader looks for patterns and allows the use of the Pattern Lab-spec
 
 ```php
 $data                  = array(...);
-$patternPath           = "path/to/pattern";
+$patternContent        = file_get_contents("path/to/pattern");
 $patternEngineBasePath = \PatternLab\PatternEngine::getInstance()->getBasePath();
 $patternLoaderClass    = $patternEngineBasePath."\Loaders\PatternLoader";
 $patternLoader         = new $patternLoaderClass($options);
-$code                  = $patternLoader->render(array("pattern" => $patternPath, "data" => $data));
+$code                  = $patternLoader->render(array("pattern" => $patternContent, "data" => $data));
 print $output; // outputs the given pattern

@@ -12,7 +12,9 @@
 
 namespace PatternLab\PatternEngine\Twig\Loaders;
 
+use \PatternLab\Config;
 use \PatternLab\PatternEngine\Loader;
+use \PatternLab\PatternEngine\Twig\TwigUtil;
 
 class StringLoader extends Loader {
 	
@@ -21,8 +23,18 @@ class StringLoader extends Loader {
 	*/
 	public function __construct($options = array()) {
 		
-		$twigLoader     = new \Twig_Loader_String();
-		$this->instance = new \Twig_Environment($twigLoader);
+		// set-up the loader
+		$twigDebug      = Config::getOption("twigDebug");
+		$macroPath      = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
+		$macroLoader    = new \Twig_Loader_Filesystem(array($macroPath));
+		$stringLoader   = new \Twig_Loader_String();
+		$twigLoader     = new \Twig_Loader_Chain(array($macroLoader, $stringLoader));
+		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		
+		// customize the loader
+		$this->instance = TwigUtil::loadDateFormats($this->instance);
+		$this->instance = TwigUtil::loadDebug($this->instance);
+		$this->instance = TwigUtil::loadMacros($this->instance, "string");
 		
 	}
 	

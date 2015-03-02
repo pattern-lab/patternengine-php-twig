@@ -1,6 +1,6 @@
 {
 	"name":             "pattern-lab/patternengine-twig",
-	"description":      "Twig-based Pattern Engine for the PHP version of Pattern Lab",
+	"description":      "Twig-based PatternEngine for Pattern Lab.",
 	"keywords":         ["twig", "pattern lab", "pattern engine"],
 	"homepage":         "http://patternlab.io",
 	"license":          "MIT",
@@ -25,12 +25,18 @@
 	},
 	"require": {
 		"php":            ">=5.3.6",
-		"twig/twig":      "v1.15.1"
+		"twig/twig":      "~1.15"
 	},
 	"extra": {
 		"patternlab": {
 			"config": [
-				{ "patternExtension": "twig" }
+				{ 
+					"patternExtension": "twig",
+					"twigDebug": false,
+					"twigDefaultDateFormat": "",
+					"twigDefaultIntervalFormat": "",
+					"twigMacroExt": "macro"
+				}
 			]
 		}
 	}
