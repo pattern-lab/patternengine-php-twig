@@ -24,8 +24,9 @@
 		}
 	},
 	"require": {
-		"php":            ">=5.3.6",
-		"twig/twig":      "~1.15"
+		"php":              ">=5.3.6",
+		"twig/twig":        "~1.15",
+		"pattern-lab/core": "~0.5"
 	},
 	"extra": {
 		"patternlab": {
