@@ -102,6 +102,49 @@ class TwigUtil {
 		return $instance;
 		
 	}
+	
+	/**
+	* Load functions for the Twig PatternEngine
+	* @param  {Instance}       an instance of the twig engine
+	*
+	* @return {Instance}       an instance of the twig engine
+	*/
+	public static function loadFunctions($instance) {
+		
+		// load defaults
+		$functionDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/functions";
+		$functionExt = Config::getOption("twigFunctionExt");
+		$functionExt = $functionExt ? $functionExt : "function.twig";
+		
+		if (is_dir($functionDir)) {
+			
+			// loop through the function dir...
+			$finder = new Finder();
+			$finder->files()->name("*\.".$functionExt)->in($functionDir);
+			$finder->sortByName();
+			foreach ($finder as $file) {
+				
+				include($file->getPathname());
+				
+				// $function should be defined in the included file
+				if (isset($function)) {
+					$instance->addFunction($function);
+					unset($function);
+				}
+				
+			}
+			
+		} else {
+			
+			self::dirNotExist($functionDir);
+			
+		}
+		
+		return $instance;
+		
+	}
+	
+	/**
 	* Load macros for the Twig PatternEngine
 	* @param  {Instance}       an instance of the twig engine
 	* @param  {String}         description of the loader type for the error
