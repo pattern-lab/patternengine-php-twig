@@ -8,17 +8,314 @@ Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project depe
 
     composer require pattern-lab/patternengine-twig
 
-## Using Twig Macros
+## Overview
 
-The Twig PatternEngine will automatically find and load Twig macros making them available to every pattern. To use this feature add your `.macro` files to `source/_macros/`. If your macro file is called `forms.macro` and it has a macro called `input()` you'd access it in your Twig templates as `{{ forms.input() }}`. **Please note:** ensure that there is no overlap between the keys for your macros and the keys for your data attributes.
+This document is broken into three parts:
 
-## Enabling `dump()`
+* [Working with Patterns and Twig](#working-with-patterns-and-twig)
+* [Extending Twig Further](#extending-twig-further)
+* [Available Loaders](#available-loaders)
 
-To use `dump()` set `twigDebug` in `configs/config.yml` to `true`.
+## Working with Patterns and Twig
 
-## Modifying the Default Date and Interval Format
+Twig provides access to two features that may help you extend your patterns, [macros](http://twig.sensiolabs.org/doc/templates.html#macros) and layouts via[template inheritance](http://twig.sensiolabs.org/doc/templates.html#template-inheritance). The Twig PatternEngine also supports the [pattern partial syntax](http://patternlab.io/docs/pattern-including.html) to make including one pattern within another very easy.
 
-You can modify the default date and interval formats for Twig by editing the `twigDefaultDateFormat` and `twigDefaultIntervalFormat` in `configs/config.yml`. Set them to an empty string to use Twig's default formats. **Please note:** both must be set for this feature to work.
+* [Pattern includes](#pattern-includes)
+* [Macros](#macros)
+* [Template inheritance](#template-inheritance)
+
+### Pattern includes
+
+Pattern includes take advantage of the [pattern partial syntax](http://patternlab.io/docs/pattern-including.html) as a shorthand for referencing patterns from across the system without needing to rely on absolute paths. The format:
+
+```
+{% include "[patternType]-[patternName]" }}
+```
+
+For example, let's say we wanted to include the following pattern in a molecule:
+
+```
+source/_patterns/00-atoms/03-images/02-landscape-16x9.twig
+```
+
+The **pattern type** is _atoms_ (from `00-atoms`) and the **pattern name** is _landscape-16x9_ from (from `02-landscape-16x9.twig`). Pattern sub-types are never used in this format and any digits for re-ordering are dropped. The shorthand partial syntax for this pattern would be:
+
+```
+{% include "atoms-landscape-16x9" %}
+```
+
+### Macros
+
+The requirements for using macros with Pattern Lab:
+
+* Files must go in `source/_macros`
+* Files must have the extension `.macro.twig` (_this can be modified in the config_)
+* The filename will be used as the base variable name in Twig templates
+
+**Please note:** ensure that there is no overlap between the keys for your macros and the keys for your data attributes. A macro with the name `forms.macro.twig` will conflict with a root key with the name `forms` in your JSON/YAML. Both are accessed via `{{ forms }}` in Twig.
+
+An example of a simple macro called `forms.macro.twig` in `source/_macros`:
+
+```twig
+{% macro input(name) %}
+    <input type="radio" name="{{ name }}" value="Dave" /> {{ name }}
+{% endmacro %}
+```
+
+Would be used like this in a pattern:
+
+```twig
+{{ forms.input("First name") }}
+```
+
+### Template inheritance
+
+The requirements for using template inheritance with Pattern Lab:
+
+* Files must go in `source/_layouts`
+* Files must have the extension `.twig`
+* The filename will be used as the reference in the `extends` tag
+
+An example of a simple layout called `base.twig` in `source/_layouts`:
+
+```twig
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <link rel="stylesheet" href="style.css" />
+            <title>{% block title %}{% endblock %} - My Webpage</title>
+        {% endblock %}
+    </head>
+    <body>
+        <div id="content">{% block content %}{% endblock %}</div>
+        <div id="footer">
+            {% block footer %}
+                &copy; Copyright 2011 by <a href="http://domain.invalid/">you</a>.
+            {% endblock %}
+        </div>
+    </body>
+</html>
+```
+
+Would be used like this in a pattern:
+
+```twig
+{% extends "base.twig" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+    <h1>Index</h1>
+    <p class="important">
+        Welcome on my awesome homepage.
+    </p>
+{% endblock %}
+```
+
+## Extending Twig Further
+
+Twig comes with a number of ways to extend the underlying template parser. You can you can add [extra tags](http://twig.sensiolabs.org/doc/advanced.html#tags), [filters](http://twig.sensiolabs.org/doc/advanced.html#filters), [tests](http://twig.sensiolabs.org/doc/advanced.html#tests), and [functions](http://twig.sensiolabs.org/doc/advanced.html#functions). The Twig PatternEngine tries to simplify these extensions by allowing you to create files in specific folders and then auto-load the extensions for you. Learn more about:
+
+* [Filters](#filters)
+* [Functions](#functions)
+* [Tags](#tags)
+* [Tests](#tests)
+
+You can also:
+
+* [Enable `dump()`](#enable-dump)
+* [Modify the Default Date and Interval Formats](#modify-the-default-date-and-interval-formats)
+
+### Filters
+
+The requirements for using filters with Pattern Lab:
+
+* Files must go in `source/_twig-components/filters`
+* Files must have the extension `.filter.twig` (_this can be modified in the config_)
+* The filter **must** set the variable `$filter`
+* Only one filter per file (_e.g. can only set `$filter` once per file_)
+
+An example function called `rot13.filter.twig` in `source/_twig-components/filters`:
+
+```php
+<?php
+
+$filter = new Twig_SimpleFilter('rot13', function ($string) {
+	return str_rot13($string);
+});
+
+?>
+```
+
+Would be used like this in a pattern:
+
+```twig
+{{ bar|rot13 }}
+```
+
+### Functions
+
+The requirements for using functions with Pattern Lab:
+
+* Files must go in `source/_twig-components/functions`
+* Files must have the extension `.function.twig` (_this can be modified in the config_)
+* The function **must** set the variable `$function`
+* Only one function per file (_e.g. can only set `$function` once per file_)
+
+An example function called `boo.function.twig` in `source/_twig-components/functions`:
+
+```php
+<?php
+
+$function = new Twig_SimpleFunction('boo', function ($string) {
+	return $string." boo! ";
+});
+
+?>
+```
+
+Would be used like this in a pattern:
+
+```twig
+{{ boo("ghost says what?") }}
+```
+
+### Tests
+
+The requirements for using tests with Pattern Lab:
+
+* Files must go in `source/_twig-components/tests`
+* Files must have the extension `.test.twig` (_this can be modified in the config_)
+* The test **must** set the variable `$test`
+* Only one test per file (_e.g. can only set `$test` once per file_)
+
+An example of a simple test called `red.test.twig` in `source/_twig-components/tests`:
+
+```php
+<?php
+
+$test = new Twig_SimpleTest('red', function ($value) {
+	
+	if (isset($value["color"]) && $value["color"] == 'red') {
+		return true;
+	}
+	
+	return false;
+});
+
+?>
+```
+
+Would be used like this in a pattern:
+
+```twig
+{% if shirt is red %}
+	Why did I ever sign-up with Starfleet?
+{% endif %}
+```
+
+Where the JSON for the data to set `shirt` would be:
+
+```json
+"shirt": {
+	"color": "red"
+}
+```
+
+**Reminder:** all data in Pattern Lab is stored as an array and _not_ as an object. So `$object->attribute` won't work in tests.
+
+### Tags
+
+The requirements for using tags with Pattern Lab:
+
+* Files must go in `source/_twig-components/tags`
+* Files must have the extension `.tag.twig` (_this can be modified in the config_)
+* The filename **must** be reflected in class names. (e.g. `Project_{filename}_Node` and `Project_{filename}_TokenParser`)
+* Only one tag per file
+
+Tags are the most complicated extension to set-up with Pattern Lab. Three steps are needed to define a new tag in Twig:
+
+* Defining a Token Parser class (_responsible for parsing the template code_)
+* Defining a Node class (_responsible for converting the parsed code to PHP_)
+* Registering the tag.
+
+Pattern Lab takes care of the registering for you based on the file name.
+
+An example of a simple tag called `setdupe.test.twig` in `source/_twig-components/tests` that mimics the default `set` tag. Please note all of the locations where class names incorporate the filename, `setdupe`.:
+
+```php
+<?php
+
+// these files are loaded three times and we can't re-set a class
+if (!class_exists("Project_setdupe_Node")) {
+	
+	class Project_setdupe_Node extends Twig_Node {
+		
+		public function __construct($name, Twig_Node_Expression $value, $line, $tag = null) {
+			parent::__construct(array('value' => $value), array('name' => $name), $line, $tag);
+		}
+		
+		public function compile(Twig_Compiler $compiler) {
+			$compiler
+				->addDebugInfo($this)
+				->write('$context[\''.$this->getAttribute('name').'\'] = ')
+				->subcompile($this->getNode('value'))
+				->raw(";\n");
+		}
+		
+	}
+	
+}
+
+// these files are loaded three times and we can't re-set a class
+if (!class_exists("Project_setdupe_TokenParser")) {
+	
+	class Project_setdupe_TokenParser extends Twig_TokenParser {
+		
+		public function parse(Twig_Token $token) {
+			
+			$parser = $this->parser;
+			$stream = $parser->getStream();
+			
+			$name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
+			$stream->expect(Twig_Token::OPERATOR_TYPE, '=');
+			$value = $parser->getExpressionParser()->parseExpression();
+			$stream->expect(Twig_Token::BLOCK_END_TYPE);
+			
+			return new Project_setdupe_Node($name, $value, $token->getLine(), $this->getTag());
+		}
+		
+		public function getTag() {
+			return 'setdupe';
+		}
+		
+	}
+	
+}
+
+?>
+```
+
+Would be used like this in a pattern:
+
+```
+{% setdupe name = "Ziggy" %}
+{{ name }}
+```
+
+### Enable `dump()`
+
+To use `dump()` set `twigDebug` in `config/config.yml` to `true`.
+
+### Modify the Default Date and Interval Formats
+
+You can modify the default date and interval formats for Twig by editing the `twigDefaultDateFormat` and `twigDefaultIntervalFormat` in `config/config.yml`. Set them to an empty string to use Twig's default formats. **Please note:** both must be set for this feature to work.
 
 ## Available Loaders
 
@@ -59,3 +356,6 @@ $patternLoaderClass    = $patternEngineBasePath."\Loaders\PatternLoader";
 $patternLoader         = new $patternLoaderClass($options);
 $code                  = $patternLoader->render(array("pattern" => $patternContent, "data" => $data));
 print $output; // outputs the given pattern
+
+
+::""''''''
