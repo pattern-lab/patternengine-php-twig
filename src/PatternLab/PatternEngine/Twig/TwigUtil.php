@@ -83,12 +83,18 @@ class TwigUtil {
 			$finder->sortByName();
 			foreach ($finder as $file) {
 				
-				include($file->getPathname());
-				
-				// $filter should be defined in the included file
-				if (isset($filter)) {
-					$instance->addFilter($filter);
-					unset($filter);
+				// see if the file should be ignored or not
+				$baseName = $file->getBasename();
+				if ($baseName[0] != "_") {
+					
+					include($file->getPathname());
+					
+					// $filter should be defined in the included file
+					if (isset($filter)) {
+						$instance->addFilter($filter);
+						unset($filter);
+					}
+					
 				}
 				
 			}
@@ -124,12 +130,18 @@ class TwigUtil {
 			$finder->sortByName();
 			foreach ($finder as $file) {
 				
-				include($file->getPathname());
-				
-				// $function should be defined in the included file
-				if (isset($function)) {
-					$instance->addFunction($function);
-					unset($function);
+				// see if the file should be ignored or not
+				$baseName = $file->getBasename();
+				if ($baseName[0] != "_") {
+					
+					include($file->getPathname());
+					
+					// $function should be defined in the included file
+					if (isset($function)) {
+						$instance->addFunction($function);
+						unset($function);
+					}
+					
 				}
 				
 			}
@@ -164,7 +176,16 @@ class TwigUtil {
 			$finder->files()->name("*.".$macroExt)->in($macroDir);
 			$finder->sortByName();
 			foreach ($finder as $file) {
-				$instance->addGlobal($file->getBasename(".".$macroExt), $instance->loadTemplate($file->getBasename()));
+				
+				// see if the file should be ignored
+				$baseName = $file->getBasename();
+				if ($baseName[0] != "_") {
+					
+					// add the macro to the global context
+					$instance->addGlobal($file->getBasename(".".$macroExt), $instance->loadTemplate($baseName));
+					
+				}
+				
 			}
 			
 		} else {
@@ -197,9 +218,19 @@ class TwigUtil {
 			$finder->files()->name("*\.".$tagExt)->in($tagDir);
 			$finder->sortByName();
 			foreach ($finder as $file) {
-				include($file->getPathname());
-				$className = "Project_".$file->getBasename(".".$tagExt)."_TokenParser";
-				$instance->addTokenParser(new $className());
+				
+				// see if the file should be ignored or not
+				$baseName = $file->getBasename();
+				if ($baseName[0] != "_") {
+					
+					include($file->getPathname());
+					
+					// Project_{filenameBase}_TokenParser should be defined in the include
+					$className = "Project_".$file->getBasename(".".$tagExt)."_TokenParser";
+					$instance->addTokenParser(new $className());
+					
+				}
+				
 			}
 			
 		} else {
@@ -233,12 +264,18 @@ class TwigUtil {
 			$finder->sortByName();
 			foreach ($finder as $file) {
 				
-				include($file->getPathname());
-				
-				// $test should be defined in the included file
-				if (isset($test)) {
-					$instance->addTest($test);
-					unset($test);
+				// see if the file should be ignored or not
+				$baseName = $file->getBasename();
+				if ($baseName[0] != "_") {
+					
+					include($file->getPathname());
+					
+					// $test should be defined in the included file
+					if (isset($test)) {
+						$instance->addTest($test);
+						unset($test);
+					}
+					
 				}
 				
 			}
