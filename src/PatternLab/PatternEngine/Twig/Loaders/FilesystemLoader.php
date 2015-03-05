@@ -23,16 +23,38 @@ class FilesystemLoader extends Loader {
 	*/
 	public function __construct($options = array()) {
 		
-		// set-up the loader
+		// set-up default vars
 		$twigDebug      = Config::getOption("twigDebug");
-		$macroPath      = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
-		$twigLoader     = new \Twig_Loader_Filesystem(array($options["templatePath"],$options["partialsPath"],$macroPath));
+		
+		// set-up the paths to be searched for templates
+		$dirPaths       = array();
+		$dirPaths[]     = $options["templatePath"];
+		$dirPaths[]     = $options["partialsPath"];
+		
+		// see if source/_macros exists. if so add it to be searchable
+		$macrosPath     = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
+		if (is_dir($macrosPath)) {
+			$dirPaths[] = $macrosPath;
+		}
+		
+		// see if source/_layouts exists. if so add it to be searchable
+		$layoutsPath    = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_layouts";
+		if (is_dir($layoutsPath)) {
+			$dirPaths[] = $layoutsPath;
+		}
+		
+		// set-up Twig
+		$twigLoader     = new \Twig_Loader_Filesystem($dirPaths);
 		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
 		
-		// customize the loader
+		// customize Twig
+		$this->instance = TwigUtil::loadFilters($this->instance);
+		$this->instance = TwigUtil::loadFunctions($this->instance);
+		$this->instance = TwigUtil::loadTags($this->instance);
+		$this->instance = TwigUtil::loadTests($this->instance);
 		$this->instance = TwigUtil::loadDateFormats($this->instance);
 		$this->instance = TwigUtil::loadDebug($this->instance);
-		$this->instance = TwigUtil::loadMacros($this->instance, "filesystem");
+		$this->instance = TwigUtil::loadMacros($this->instance);
 		
 	}
 	

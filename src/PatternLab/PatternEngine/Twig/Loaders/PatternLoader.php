@@ -26,20 +26,46 @@ class PatternLoader extends Loader {
 	*/
 	public function __construct($options = array()) {
 		
-		// set-up the loader
+		// set-up default vars
 		$twigDebug            = Config::getOption("twigDebug");
-		$patternSourceDir     = Config::getOption("patternSourceDir");
-		$macroPath            = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
-		$patternPartialLoader = new Twig_Loader_PatternPartialLoader($patternSourceDir,array("patternPaths" => $options["patternPaths"]));
-		$patternStringLoader  = new \Twig_Loader_String();
-		$macroLoader          = new \Twig_Loader_Filesystem(array($macroPath));
-		$twigLoader           = new \Twig_Loader_Chain(array($patternPartialLoader, $macroLoader, $patternStringLoader));
+		
+		// set-up the loader list
+		$loaders              = array();
+		$filesystemLoaderPaths = array();
+		$loaders[]            = new Twig_Loader_PatternPartialLoader(Config::getOption("patternSourceDir"),array("patternPaths" => $options["patternPaths"]));
+		
+		
+		// see if source/_macros exists
+		$macrosPath     = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
+		if (is_dir($macrosPath)) {
+			$filesystemLoaderPaths[] = $macrosPath;
+		}
+		
+		// see if source/_layouts exists. if so add it to be searchable
+		$layoutsPath    = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_layouts";
+		if (is_dir($layoutsPath)) {
+			$filesystemLoaderPaths[] = $layoutsPath;
+		}
+		
+		// add the paths to the filesystem loader if the paths existed
+		if (count($filesystemLoaderPaths) > 0) {
+			$loaders[]        = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
+		}
+		
+		$loaders[]            = new \Twig_Loader_String();
+		
+		// set-up Twig
+		$twigLoader           = new \Twig_Loader_Chain($loaders);
 		$this->instance       = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
 		
-		// customize the loader
+		// customize Twig
+		$this->instance       = TwigUtil::loadFilters($this->instance);
+		$this->instance       = TwigUtil::loadFunctions($this->instance);
+		$this->instance       = TwigUtil::loadTags($this->instance);
+		$this->instance       = TwigUtil::loadTests($this->instance);
 		$this->instance       = TwigUtil::loadDateFormats($this->instance);
 		$this->instance       = TwigUtil::loadDebug($this->instance);
-		$this->instance       = TwigUtil::loadMacros($this->instance, "pattern");
+		$this->instance       = TwigUtil::loadMacros($this->instance);
 		
 	}
 	
