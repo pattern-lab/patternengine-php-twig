@@ -356,6 +356,4 @@ $patternLoaderClass    = $patternEngineBasePath."\Loaders\PatternLoader";
 $patternLoader         = new $patternLoaderClass($options);
 $code                  = $patternLoader->render(array("pattern" => $patternContent, "data" => $data));
 print $output; // outputs the given pattern
-
-
-::""''''''
+```
