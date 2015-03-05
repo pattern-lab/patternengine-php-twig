@@ -137,6 +137,7 @@ You can also:
 
 * [Enable `dump()`](#enable-dump)
 * [Modify the Default Date and Interval Formats](#modify-the-default-date-and-interval-formats)
+* [Quickly disable extensions](#quickly-disable-extensions)
 
 ### Filters
 
@@ -159,7 +160,7 @@ $filter = new Twig_SimpleFilter('rot13', function ($string) {
 ?>
 ```
 
-Would be used like this in a pattern:
+This filter would be used like this in a pattern:
 
 ```twig
 {{ bar|rot13 }}
@@ -186,7 +187,7 @@ $function = new Twig_SimpleFunction('boo', function ($string) {
 ?>
 ```
 
-Would be used like this in a pattern:
+This function would be used like this in a pattern:
 
 ```twig
 {{ boo("ghost says what?") }}
@@ -218,7 +219,7 @@ $test = new Twig_SimpleTest('red', function ($value) {
 ?>
 ```
 
-Would be used like this in a pattern:
+This test would be used like this in a pattern:
 
 ```twig
 {% if shirt is red %}
@@ -308,7 +309,7 @@ if (!class_exists("Project_setdupe_TokenParser")) {
 ?>
 ```
 
-Would be used like this in a pattern:
+This tag would be used like this in a pattern:
 
 ```
 {% setdupe name = "Ziggy" %}
@@ -322,6 +323,20 @@ To use `dump()` set `twigDebug` in `config/config.yml` to `true`.
 ### Modify the Default Date and Interval Formats
 
 You can modify the default date and interval formats for Twig by editing the `twigDefaultDateFormat` and `twigDefaultIntervalFormat` in `config/config.yml`. Set them to an empty string to use Twig's default formats. **Please note:** both must be set for this feature to work.
+
+### Quickly Disable Extensions
+
+To disable extensions that you're no longer using simply add an underscore to the beginning of a filename and then re-generate your site. For example, the enabled rot13 filter:
+
+    source/_twig-components/filters/rot13.filter.twig
+
+And the disabled rot13 filter:
+
+    source/_twig-components/filters/_rot13.filter.twig
+
+Then re-generate your Pattern Lab site with:
+
+    php core/console --generate
 
 ## Available Loaders
 
