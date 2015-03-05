@@ -19,6 +19,15 @@ use \Symfony\Component\Finder\Finder;
 class TwigUtil {
 	
 	/**
+	* Write a warning if a dir doesn't exist
+	* @param  {String}         the dir that doesn't exist
+	*/
+	protected static function dirNotExist($dir) {
+		$dirHR = Console::getHumanReadablePath($dir);
+		Console::writeWarning("the path <path>".$dirHR."</path> doesn't exist so filters won't be loaded...");
+	}
+	
+	/**
 	* Load custom date formats for Twig
 	* @param  {Instance}       an instance of the twig engine
 	*
