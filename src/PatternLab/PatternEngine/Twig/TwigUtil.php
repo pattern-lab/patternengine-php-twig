@@ -211,4 +211,46 @@ class TwigUtil {
 		return $instance;
 		
 	}
+	
+	/**
+	* Load functions for the Twig PatternEngine
+	* @param  {Instance}       an instance of the twig engine
+	*
+	* @return {Instance}       an instance of the twig engine
+	*/
+	public static function loadTests($instance) {
+		
+		// load defaults
+		$testDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/tests";
+		$testExt = Config::getOption("twigTestExt");
+		$testExt = $testExt ? $testExt : "test.twig";
+		
+		if (is_dir($testDir)) {
+			
+			// loop through the test dir...
+			$finder = new Finder();
+			$finder->files()->name("*\.".$testExt)->in($testDir);
+			$finder->sortByName();
+			foreach ($finder as $file) {
+				
+				include($file->getPathname());
+				
+				// $test should be defined in the included file
+				if (isset($test)) {
+					$instance->addTest($test);
+					unset($test);
+				}
+				
+			}
+			
+		} else {
+			
+			self::dirNotExist($testDir);
+			
+		}
+		
+		return $instance;
+		
+	}
+	
 }
