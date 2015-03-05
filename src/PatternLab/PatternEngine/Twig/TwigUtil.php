@@ -155,7 +155,7 @@ class TwigUtil {
 		// load defaults
 		$macroDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
 		$macroExt = Config::getOption("twigMacroExt");
-		$macroExt = $macroExt ? $macroExt : "macro";
+		$macroExt = $macroExt ? $macroExt : "macro.twig";
 		
 		if (is_dir($macroDir)) {
 			
