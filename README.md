@@ -12,7 +12,7 @@ Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project depe
 
     composer require pattern-lab/patternengine-twig
 
-See Packagist for the [information on the latest release](https://packagist.org/packages/pattern-lab/patternengine-twig).
+See Packagist for [information on the latest release](https://packagist.org/packages/pattern-lab/patternengine-twig).
 
 ## Overview
 
@@ -20,7 +20,7 @@ This document is broken into three parts:
 
 * [Working with Patterns and Twig](#working-with-patterns-and-twig)
 * [Extending Twig Further](#extending-twig-further)
-* [Available Loaders](#available-loaders)
+* [Available Loaders for Plugin Developers](#available-loaders)
 
 ## Working with Patterns and Twig
 
