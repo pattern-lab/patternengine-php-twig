@@ -169,9 +169,7 @@ class TwigUtil {
 			
 		} else {
 			
-			// write warning because the macro dir doesn't exist
-			$macroDirHR = Console::getHumanReadablePath($macroDir);
-			Console::writeWarning("the path <path>".$macroDirHR."</path> doesn't exist so macros won't be loaded for the ".$instanceType." loader...");
+			self::dirNotExist($macroDir);
 			
 		}
 		
