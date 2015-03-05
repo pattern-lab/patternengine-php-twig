@@ -177,4 +177,38 @@ class TwigUtil {
 		
 	}
 	
+	/**
+	* Load tags for the Twig PatternEngine
+	* @param  {Instance}       an instance of the twig engine
+	*
+	* @return {Instance}       an instance of the twig engine
+	*/
+	public static function loadTags($instance) {
+		
+		// load defaults
+		$tagDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/tags";
+		$tagExt = Config::getOption("twigTagExt");
+		$tagExt = $tagExt ? $tagExt : "tag.twig";
+		
+		if (is_dir($tagDir)) {
+			
+			// loop through the tags and instantiate the class...
+			$finder = new Finder();
+			$finder->files()->name("*\.".$tagExt)->in($tagDir);
+			$finder->sortByName();
+			foreach ($finder as $file) {
+				include($file->getPathname());
+				$className = "Project_".$file->getBasename(".".$tagExt)."_TokenParser";
+				$instance->addTokenParser(new $className());
+			}
+			
+		} else {
+			
+			self::dirNotExist($tagDir);
+			
+		}
+		
+		return $instance;
+		
+	}
 }
