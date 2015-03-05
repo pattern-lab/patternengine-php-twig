@@ -63,6 +63,45 @@ class TwigUtil {
 	}
 	
 	/**
+	* Load filters for the Twig PatternEngine
+	* @param  {Instance}       an instance of the twig engine
+	*
+	* @return {Instance}       an instance of the twig engine
+	*/
+	public static function loadFilters($instance) {
+		
+		// load defaults
+		$filterDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/filters";
+		$filterExt = Config::getOption("twigFilterExt");
+		$filterExt = $filterExt ? $filterExt : "filter.twig";
+		
+		if (is_dir($filterDir)) {
+			
+			// loop through the filter dir...
+			$finder = new Finder();
+			$finder->files()->name("*\.".$filterExt)->in($filterDir);
+			$finder->sortByName();
+			foreach ($finder as $file) {
+				
+				include($file->getPathname());
+				
+				// $filter should be defined in the included file
+				if (isset($filter)) {
+					$instance->addFilter($filter);
+					unset($filter);
+				}
+				
+			}
+			
+		} else {
+			
+			self::dirNotExist($filterDir);
+			
+		}
+		
+		return $instance;
+		
+	}
 	* Load macros for the Twig PatternEngine
 	* @param  {Instance}       an instance of the twig engine
 	* @param  {String}         description of the loader type for the error
