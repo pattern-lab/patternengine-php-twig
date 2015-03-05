@@ -253,7 +253,7 @@ Tags are the most complicated extension to set-up with Pattern Lab. Three steps 
 
 Pattern Lab takes care of the registering for you based on the file name.
 
-An example of a simple tag called `setdupe.test.twig` in `source/_twig-components/tests` that mimics the default `set` tag. Please note all of the locations where class names incorporate the filename, `setdupe`.
+An example of a simple tag called `setdupe.tag.twig` in `source/_twig-components/tags` that mimics the default `set` tag. Please note all of the locations where class names incorporate the filename, `setdupe`.
 
 ```php
 <?php
