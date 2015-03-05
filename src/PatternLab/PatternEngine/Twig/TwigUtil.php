@@ -147,11 +147,10 @@ class TwigUtil {
 	/**
 	* Load macros for the Twig PatternEngine
 	* @param  {Instance}       an instance of the twig engine
-	* @param  {String}         description of the loader type for the error
 	*
 	* @return {Instance}       an instance of the twig engine
 	*/
-	public static function loadMacros($instance, $instanceType) {
+	public static function loadMacros($instance) {
 		
 		// load defaults
 		$macroDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
