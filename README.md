@@ -4,9 +4,15 @@ The Twig PatternEngine allows you to use [Twig](http://twig.sensiolabs.org) as t
 
 ## Installation
 
-Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project dependencies. To install the Twig PatternEngine:
+The Twig PatternEngine comes pre-installed with the [Pattern Lab Standard Edition for Twig](https://github.com/pattern-lab/edition-php-twig-standard). Please start there for all your Twig needs.
+
+### Composer
+
+Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project dependencies with Pattern Lab Editions. To add the Twig PatternEngine to the dependencies list for your Edition you can type the following in the command line at the base of your project:
 
     composer require pattern-lab/patternengine-twig
+
+See Packagist for the [information on the latest release](https://packagist.org/packages/pattern-lab/patternengine-twig).
 
 ## Overview
 
