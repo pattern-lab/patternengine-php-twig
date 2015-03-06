@@ -73,7 +73,7 @@ class TwigUtil {
 		// load defaults
 		$filterDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/filters";
 		$filterExt = Config::getOption("twigFilterExt");
-		$filterExt = $filterExt ? $filterExt : "filter.twig";
+		$filterExt = $filterExt ? $filterExt : "filter.php";
 		
 		if (is_dir($filterDir)) {
 			
@@ -120,7 +120,7 @@ class TwigUtil {
 		// load defaults
 		$functionDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/functions";
 		$functionExt = Config::getOption("twigFunctionExt");
-		$functionExt = $functionExt ? $functionExt : "function.twig";
+		$functionExt = $functionExt ? $functionExt : "function.php";
 		
 		if (is_dir($functionDir)) {
 			
@@ -209,7 +209,7 @@ class TwigUtil {
 		// load defaults
 		$tagDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/tags";
 		$tagExt = Config::getOption("twigTagExt");
-		$tagExt = $tagExt ? $tagExt : "tag.twig";
+		$tagExt = $tagExt ? $tagExt : "tag.php";
 		
 		if (is_dir($tagDir)) {
 			
@@ -254,7 +254,7 @@ class TwigUtil {
 		// load defaults
 		$testDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/tests";
 		$testExt = Config::getOption("twigTestExt");
-		$testExt = $testExt ? $testExt : "test.twig";
+		$testExt = $testExt ? $testExt : "test.php";
 		
 		if (is_dir($testDir)) {
 			

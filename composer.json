@@ -36,10 +36,10 @@
 					"twigDefaultDateFormat": "",
 					"twigDefaultIntervalFormat": "",
 					"twigMacroExt": "macro.twig",
-					"twigFilterExt": "filter.twig",
-					"twigFunctionExt": "function.twig",
-					"twigTagExt": "tag.twig",
-					"twigTestExt": "test.twig"
+					"twigFilterExt": "filter.php",
+					"twigFunctionExt": "function.php",
+					"twigTagExt": "tag.php",
+					"twigTestExt": "test.php"
 				}
 			]
 		}

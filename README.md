@@ -144,7 +144,7 @@ You can also:
 The requirements for using filters with Pattern Lab:
 
 * Files must go in `source/_twig-components/filters`
-* Files must have the extension `.filter.twig` (_this can be modified in the config_)
+* Files must have the extension `.filter.php` (_this can be modified in the config_)
 * The filter **must** set the variable `$filter`
 * Only one filter per file (_e.g. can only set `$filter` once per file_)
 
@@ -171,7 +171,7 @@ This filter would be used like this in a pattern:
 The requirements for using functions with Pattern Lab:
 
 * Files must go in `source/_twig-components/functions`
-* Files must have the extension `.function.twig` (_this can be modified in the config_)
+* Files must have the extension `.function.php` (_this can be modified in the config_)
 * The function **must** set the variable `$function`
 * Only one function per file (_e.g. can only set `$function` once per file_)
 
@@ -198,7 +198,7 @@ This function would be used like this in a pattern:
 The requirements for using tests with Pattern Lab:
 
 * Files must go in `source/_twig-components/tests`
-* Files must have the extension `.test.twig` (_this can be modified in the config_)
+* Files must have the extension `.test.php` (_this can be modified in the config_)
 * The test **must** set the variable `$test`
 * Only one test per file (_e.g. can only set `$test` once per file_)
 
@@ -242,7 +242,7 @@ Where the JSON for the data to set `shirt` would be:
 The requirements for using tags with Pattern Lab:
 
 * Files must go in `source/_twig-components/tags`
-* Files must have the extension `.tag.twig` (_this can be modified in the config_)
+* Files must have the extension `.tag.php` (_this can be modified in the config_)
 * The filename **must** be reflected in class names. (e.g. `Project_{filename}_Node` and `Project_{filename}_TokenParser`)
 * Only one tag per file
 
