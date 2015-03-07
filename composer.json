@@ -31,9 +31,9 @@
 		"patternlab": {
 			"config": [
 				{ 
-					"patternExtension": "twig",
 					"lineageMatch": "{%([ ]+)?include [&quot;\&#039;]([A-Za-z0-9-_]+)[&quot;\&#039;](.*)%}",
 					"lineageMatchKey": 2,
+					"patternExtension": "twig",
 					"twigDebug": false,
 					"twigDefaultDateFormat": "",
 					"twigDefaultIntervalFormat": "",
