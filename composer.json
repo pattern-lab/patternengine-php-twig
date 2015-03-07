@@ -26,7 +26,7 @@
 	"require": {
 		"php":              ">=5.3.6",
 		"twig/twig":        "1.*",
-		"pattern-lab/core"  "0.*"
+		"pattern-lab/core": "0.*"
 	},
 	"extra": {
 		"patternlab": {
