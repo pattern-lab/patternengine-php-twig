@@ -1,4 +1,4 @@
-# Twig PatternEngine for Pattern Lab PHP
+# Twig PatternEngine for Pattern Lab
 
 The Twig PatternEngine allows you to use [Twig](http://twig.sensiolabs.org) as the template language for Pattern Lab PHP. Once the PatternEngine is installed you can use Twig-based StarterKits and StyleguideKits.
 
