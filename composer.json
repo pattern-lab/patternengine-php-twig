@@ -32,7 +32,8 @@
 			"config": [
 				{ 
 					"patternExtension": "twig",
-					"lineageMatch": "{{>([ ]+)?([A-Za-z0-9-_]+)(?:\:[A-Za-z0-9-]+)?(?:(| )\(.*)?([ ]+)?}}",
+					"lineageMatch": "{%([ ]+)?include [\"\']([A-Za-z0-9-_]+)[\"\'](.*)%}",
+					"lineageMatchKey": 2,
 					"twigDebug": false,
 					"twigDefaultDateFormat": "",
 					"twigDefaultIntervalFormat": "",
