@@ -1,12 +1,12 @@
 <?php
 
 /*!
- * Twig Pattern Engine Loader Class - String
+ * Twig Util Class
  *
- * Copyright (c) 2014 Dave Olsen, http://dmolsen.com
+ * Copyright (c) 2015 Dave Olsen, http://dmolsen.com
  * Licensed under the MIT license
  *
- * Sets an instance of Twig to deal with rendering of strings
+ * Various utility methods for the Twig PatternEngine
  *
  */
 
