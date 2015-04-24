@@ -21,10 +21,11 @@ class TwigUtil {
 	/**
 	* Write a warning if a dir doesn't exist
 	* @param  {String}         the dir that doesn't exist
+	* @param  {String}         the type of dir
 	*/
-	protected static function dirNotExist($dir) {
+	protected static function dirNotExist($dir, $type) {
 		$dirHR = Console::getHumanReadablePath($dir);
-		Console::writeWarning("the path <path>".$dirHR."</path> doesn't exist so filters won't be loaded...");
+		Console::writeWarning("the path <path>".$dirHR."</path> doesn't exist so ".$type." won't be loaded...");
 	}
 	
 	/**
@@ -101,7 +102,7 @@ class TwigUtil {
 			
 		} else {
 			
-			self::dirNotExist($filterDir);
+			self::dirNotExist($filterDir,"filters");
 			
 		}
 		
@@ -148,7 +149,7 @@ class TwigUtil {
 			
 		} else {
 			
-			self::dirNotExist($functionDir);
+			self::dirNotExist($functionDir,"functions");
 			
 		}
 		
@@ -190,7 +191,7 @@ class TwigUtil {
 			
 		} else {
 			
-			self::dirNotExist($macroDir);
+			self::dirNotExist($macroDir,"macros");
 			
 		}
 		
@@ -235,7 +236,7 @@ class TwigUtil {
 			
 		} else {
 			
-			self::dirNotExist($tagDir);
+			self::dirNotExist($tagDir,"tags");
 			
 		}
 		
@@ -282,7 +283,7 @@ class TwigUtil {
 			
 		} else {
 			
-			self::dirNotExist($testDir);
+			self::dirNotExist($testDir,"tests");
 			
 		}
 		
