@@ -19,16 +19,6 @@ use \Symfony\Component\Finder\Finder;
 class TwigUtil {
 	
 	/**
-	* Write a warning if a dir doesn't exist
-	* @param  {String}         the dir that doesn't exist
-	* @param  {String}         the type of dir
-	*/
-	protected static function dirNotExist($dir, $type) {
-		$dirHR = Console::getHumanReadablePath($dir);
-		Console::writeWarning("the path <path>".$dirHR."</path> doesn't exist so ".$type." won't be loaded...");
-	}
-	
-	/**
 	* Load custom date formats for Twig
 	* @param  {Instance}       an instance of the twig engine
 	*
@@ -100,10 +90,6 @@ class TwigUtil {
 				
 			}
 			
-		} else {
-			
-			self::dirNotExist($filterDir,"filters");
-			
 		}
 		
 		return $instance;
@@ -147,10 +133,6 @@ class TwigUtil {
 				
 			}
 			
-		} else {
-			
-			self::dirNotExist($functionDir,"functions");
-			
 		}
 		
 		return $instance;
@@ -188,10 +170,6 @@ class TwigUtil {
 				}
 				
 			}
-			
-		} else {
-			
-			self::dirNotExist($macroDir,"macros");
 			
 		}
 		
@@ -233,10 +211,6 @@ class TwigUtil {
 				}
 				
 			}
-			
-		} else {
-			
-			self::dirNotExist($tagDir,"tags");
 			
 		}
 		
@@ -280,10 +254,6 @@ class TwigUtil {
 				}
 				
 			}
-			
-		} else {
-			
-			self::dirNotExist($testDir,"tests");
 			
 		}
 		
