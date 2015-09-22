@@ -35,7 +35,7 @@ Twig provides access to two features that may help you extend your patterns, [ma
 Pattern includes take advantage of the [pattern partial syntax](http://patternlab.io/docs/pattern-including.html) as a shorthand for referencing patterns from across the system without needing to rely on absolute paths. The format:
 
 ```
-{% include "[patternType]-[patternName]" }}
+{% include "[patternType]-[patternName]" %}
 ```
 
 For example, let's say we wanted to include the following pattern in a molecule:
