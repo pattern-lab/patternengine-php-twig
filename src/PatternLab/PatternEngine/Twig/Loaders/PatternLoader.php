@@ -46,7 +46,22 @@ class PatternLoader extends Loader {
 		if (is_dir($layoutsPath)) {
 			$filesystemLoaderPaths[] = $layoutsPath;
 		}
-		
+
+		// add source/_patterns subdirectories for Drupal theme template compatibility
+		$patternSourceDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_patterns";
+		$patternObjects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($patternSourceDir), \RecursiveIteratorIterator::SELF_FIRST);
+		$patternObjects->setFlags(\FilesystemIterator::SKIP_DOTS);
+
+		// sort the returned objects
+		$patternObjects = iterator_to_array($patternObjects);
+		ksort($patternObjects);
+
+		foreach ($patternObjects as $name => $object) {
+			if ($object->isDir()) {
+				$filesystemLoaderPaths[] = $object->getPathname();
+			}
+		}
+
 		// add the paths to the filesystem loader if the paths existed
 		if (count($filesystemLoaderPaths) > 0) {
 			$loaders[]        = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
