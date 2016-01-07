@@ -35,6 +35,7 @@
 				"lineageMatchKey": 2,
 				"patternExtension": "twig",
 				"twigDebug": false,
+				"twigAutoescape": "html",
 				"twigDefaultDateFormat": "",
 				"twigDefaultIntervalFormat": "",
 				"twigMacroExt": "macro.twig",

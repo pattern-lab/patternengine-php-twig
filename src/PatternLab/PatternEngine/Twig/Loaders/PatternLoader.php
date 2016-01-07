@@ -28,6 +28,7 @@ class PatternLoader extends Loader {
 		
 		// set-up default vars
 		$twigDebug            = Config::getOption("twigDebug");
+		$twigAutoescape       = Config::getOption("twigAutoescape");
 		
 		// set-up the loader list
 		$loaders              = array();
@@ -56,7 +57,7 @@ class PatternLoader extends Loader {
 		
 		// set-up Twig
 		$twigLoader           = new \Twig_Loader_Chain($loaders);
-		$this->instance       = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		$this->instance       = new \Twig_Environment($twigLoader, array("debug" => $twigDebug, "autoescape" => $twigAutoescape));
 		
 		// customize Twig
 		$this->instance       = TwigUtil::loadFilters($this->instance);
