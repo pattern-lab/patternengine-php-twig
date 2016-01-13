@@ -14,6 +14,7 @@
 namespace PatternLab\PatternEngine\Twig\Loaders;
 
 use \PatternLab\Config;
+use \PatternLab\PatternEngine\Twig\IncludeNodeVisitor;
 use \PatternLab\PatternEngine\Twig\Loaders\Twig\PatternPartialLoader as Twig_Loader_PatternPartialLoader;
 use \PatternLab\PatternEngine\Twig\Loaders\Twig\PatternStringLoader as Twig_Loader_PatternStringLoader;
 use \PatternLab\PatternEngine\Loader;
@@ -66,7 +67,9 @@ class PatternLoader extends Loader {
 		$this->instance       = TwigUtil::loadDateFormats($this->instance);
 		$this->instance       = TwigUtil::loadDebug($this->instance);
 		$this->instance       = TwigUtil::loadMacros($this->instance);
-		
+
+		// add node visitor
+		$this->instance->addNodeVisitor(new IncludeNodeVisitor());
 	}
 	
 	/**
