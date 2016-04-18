@@ -11,7 +11,7 @@ The Twig PatternEngine comes pre-installed with the [Pattern Lab Standard Editio
 Pattern Lab PHP uses [Composer](https://getcomposer.org/) to manage project dependencies with Pattern Lab Editions. To add the Twig PatternEngine to the dependencies list for your Edition you can type the following in the command line at the base of your project:
 
     composer require pattern-lab/patternengine-twig
-o
+
 See Packagist for [information on the latest release](https://packagist.org/packages/pattern-lab/patternengine-twig).
 
 ## Overview
