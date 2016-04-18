@@ -78,9 +78,10 @@ Would be used like this in a pattern:
 
 The requirements for using template inheritance with Pattern Lab:
 
-* Files must go in `source/_layouts`
+* Files can optionally go in `source/_layouts` in order to hide them from the list of patterns.
 * Files must have the extension `.twig`
-* The filename will be used as the reference in the `extends` tag
+* Files can be extended either by using Pattern Lab's normal shorthand syntax (e.g, `{% extends 'templates-extended-layout'%}`), 
+  or, if they are in the `source/_layouts` directory, by using just the filename as reference (e.g., `{% extends 'extended-layout'%}`).
 
 An example of a simple layout called `base.twig` in `source/_layouts`:
 
