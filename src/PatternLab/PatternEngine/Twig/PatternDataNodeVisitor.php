@@ -4,7 +4,7 @@ namespace PatternLab\PatternEngine\Twig;
 
 use PatternLab\Data;
 
-class IncludeNodeVisitor extends \Twig_BaseNodeVisitor
+class PatternDataNodeVisitor extends \Twig_BaseNodeVisitor
 {
     protected function doEnterNode(\Twig_Node $node, \Twig_Environment $env)
     {
@@ -17,7 +17,12 @@ class IncludeNodeVisitor extends \Twig_BaseNodeVisitor
             if ($node->hasNode('expr') && $node->getNode('expr')->hasAttribute('value')) {
                 $patternStoreKey = $node->getNode('expr')->getAttribute('value');
                 $data = Data::getPatternSpecificData($patternStoreKey);
-                $dataNode = new PatternDataIncludeNode($node, $data);
+                if ($node instanceof \Twig_Node_Embed) {
+                    $dataNode = new PatternDataEmbedNode($node, $data);
+                }
+                else {
+                    $dataNode = new PatternDataIncludeNode($node, $data);
+                }
 
                 return $dataNode;
             }

@@ -2,14 +2,15 @@
 
 namespace PatternLab\PatternEngine\Twig;
 
-class PatternDataIncludeNode extends \Twig_Node_Include
+class PatternDataEmbedNode extends \Twig_Node_Embed
 {
     use PatternDataNodeTrait;
 
-    public function __construct(\Twig_Node_Include $originalNode, $data)
+    public function __construct(\Twig_Node_Embed $originalNode, $data)
     {
         parent::__construct(
-          $originalNode->getNode('expr'),
+          $originalNode->getAttribute('filename'),
+          $originalNode->getAttribute('index'),
           $originalNode->getNode('variables'),
           $originalNode->getAttribute('only'),
           $originalNode->getAttribute('ignore_missing'),
