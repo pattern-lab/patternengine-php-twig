@@ -76,11 +76,12 @@ Would be used like this in a pattern:
 
 ### Template inheritance
 
-The requirements for using template inheritance with Pattern Lab:
+How to use [Template Inheritance](http://twig.sensiolabs.org/doc/templates.html#template-inheritance) with Pattern Lab:
 
-* Files must go in `source/_layouts`
-* Files must have the extension `.twig`
-* The filename will be used as the reference in the `extends` tag
+* Files must have the extension `.twig`.
+* Files can be extended either by using Pattern Lab's normal shorthand syntax (e.g, `{% extends 'templates-extended-layout'%}`).
+* Files can optionally go in `source/_layouts` in order to hide them from the list of patterns and then you can just use the filename as reference (e.g., `{% extends 'extended-layout'%}`).
+* Files that are in the same directory can also just use the file name without the shorthand syntax (however, it must include the extension). So if `file1.twig` and `file2.twig` were in same directory, you could place this code in `file2.twig`: `{% extends 'file1.twig' %}`. 
 
 An example of a simple layout called `base.twig` in `source/_layouts`:
 
@@ -123,6 +124,8 @@ Would be used like this in a pattern:
     </p>
 {% endblock %}
 ```
+
+All uses of `extends` above also work with `includes`, `embed` and most likely many other Twig Tags. Let us know if you run into interesting or unexpected use cases!
 
 ## Extending Twig Further
 
