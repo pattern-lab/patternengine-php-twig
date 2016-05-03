@@ -70,17 +70,17 @@ class PatternLoader extends Loader {
 			$twigFileLoader = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
 
 			// registering each directory under `_patterns/` as a namespace
-      $finder = new Finder();
-      // get all directories immediately under `_patterns/` (i.e. 00-atoms, 01-molecules, etc)
-      $finder->directories()->depth(0)->in($patternSourceDir);
-      foreach ($finder as $file) {
-        $itemPath = $file->getPathName();
-        $itemName = $file->getRelativePathName();
-        // removing any numbers followed by dashes (i.e. `00-atoms` => `atoms`)
-        $itemNamespace = preg_replace("/^\\d*-/uim", "", $itemName);
-        // registering each foldername as a namespace (i.e. can use `{% include "@atoms/forms/submit.twig" %}`)
-        $twigFileLoader->addPath($itemPath, $itemNamespace);
-      }
+			$finder = new Finder();
+			// get all directories immediately under `_patterns/` (i.e. 00-atoms, 01-molecules, etc)
+			$finder->directories()->depth(0)->in($patternSourceDir);
+			foreach ($finder as $file) {
+				$itemPath = $file->getPathName();
+				$itemName = $file->getRelativePathName();
+				// removing any numbers followed by dashes (i.e. `00-atoms` => `atoms`)
+				$itemNamespace = preg_replace("/^\\d*-/uim", "", $itemName);
+				// registering each foldername as a namespace (i.e. can use `{% include "@atoms/forms/submit.twig" %}`)
+				$twigFileLoader->addPath($itemPath, $itemNamespace);
+			}
 
 			$loaders[] = $twigFileLoader;
 		}
