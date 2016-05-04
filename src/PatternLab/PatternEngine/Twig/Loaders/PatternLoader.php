@@ -66,7 +66,8 @@ class PatternLoader extends Loader {
 
 		// add the paths to the filesystem loader if the paths existed
 		if (count($filesystemLoaderPaths) > 0) {
-			$loaders[]    = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
+			$filesystemLoader = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
+			$loaders[] = TwigUtil::addPaths($filesystemLoader, $patternSourceDir);
 		}
 		
 		$loaders[]      = new \Twig_Loader_String();

@@ -19,6 +19,26 @@ use \Symfony\Component\Finder\Finder;
 class TwigUtil {
 	
 	/**
+	* Registering each directory under `_patterns/` as a namespace. For example, `_patterns/00-atoms/` as `@atoms`
+	* @param  {Instance}       an instance of the filesystem Loader
+	* @param  {String}         the path to the pattern directory
+	*
+	* @return {Instance}       an instance of the filesystem Loader
+	*/
+	public static function addPaths($filesystemLoader, $patternSourceDir) {
+		
+		$finder = new Finder();
+		$finder->directories()->depth(0)->in($patternSourceDir);
+		foreach ($finder as $file) {
+			$patternBits = explode("-",$file->getRelativePathName(),2);
+			$patternTypePath = (((int)$patternBits[0] != 0) || ($patternBits[0] == '00')) ? $patternBits[1] : $pattern;
+			$filesystemLoader->addPath($file->getPathName(), $patternTypePath);
+		}
+		
+		return $filesystemLoader;
+		
+	}
+	/**
 	* Load custom date formats for Twig
 	* @param  {Instance}       an instance of the twig engine
 	*
