@@ -66,23 +66,23 @@ class PatternLoader extends Loader {
 
 		// add the paths to the filesystem loader if the paths existed
 		if (count($filesystemLoaderPaths) > 0) {
-			$loaders[]        = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
+			$loaders[]    = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
 		}
 		
-		$loaders[]            = new \Twig_Loader_String();
+		$loaders[]      = new \Twig_Loader_String();
 		
 		// set-up Twig
-		$twigLoader           = new \Twig_Loader_Chain($loaders);
-		$this->instance       = new \Twig_Environment($twigLoader, array("debug" => $twigDebug, "autoescape" => $twigAutoescape));
+		$twigLoader     = new \Twig_Loader_Chain($loaders);
+		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug, "autoescape" => $twigAutoescape));
 		
 		// customize Twig
-		$this->instance       = TwigUtil::loadFilters($this->instance);
-		$this->instance       = TwigUtil::loadFunctions($this->instance);
-		$this->instance       = TwigUtil::loadTags($this->instance);
-		$this->instance       = TwigUtil::loadTests($this->instance);
-		$this->instance       = TwigUtil::loadDateFormats($this->instance);
-		$this->instance       = TwigUtil::loadDebug($this->instance);
-		$this->instance       = TwigUtil::loadMacros($this->instance);
+		$this->instance = TwigUtil::loadFilters($this->instance);
+		$this->instance = TwigUtil::loadFunctions($this->instance);
+		$this->instance = TwigUtil::loadTags($this->instance);
+		$this->instance = TwigUtil::loadTests($this->instance);
+		$this->instance = TwigUtil::loadDateFormats($this->instance);
+		$this->instance = TwigUtil::loadDebug($this->instance);
+		$this->instance = TwigUtil::loadMacros($this->instance);
 
 		// add node visitor
 		$this->instance->addNodeVisitor(new PatternDataNodeVisitor());
