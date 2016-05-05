@@ -86,7 +86,6 @@ class PatternLoader extends Loader {
 		TwigUtil::loadDateFormats();
 		TwigUtil::loadDebug();
 		TwigUtil::loadMacros();
-		TwigUtil::addNodeVisitor();
 
 		// set-up the dispatcher
 		$dispatcherInstance = Dispatcher::getInstance();
