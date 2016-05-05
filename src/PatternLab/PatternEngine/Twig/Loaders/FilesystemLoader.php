@@ -13,6 +13,7 @@
 namespace PatternLab\PatternEngine\Twig\Loaders;
 
 use \PatternLab\Config;
+use \PatternLab\Dispatcher;
 use \PatternLab\PatternEngine\Loader;
 use \PatternLab\PatternEngine\Twig\TwigUtil;
 
@@ -24,37 +25,46 @@ class FilesystemLoader extends Loader {
 	public function __construct($options = array()) {
 		
 		// set-up default vars
-		$twigDebug      = Config::getOption("twigDebug");
+		$twigDebug = Config::getOption("twigDebug");
 		
 		// set-up the paths to be searched for templates
-		$dirPaths       = array();
-		$dirPaths[]     = $options["templatePath"];
-		$dirPaths[]     = $options["partialsPath"];
+		$filesystemLoaderPaths   = array();
+		$filesystemLoaderPaths[] = $options["templatePath"];
+		$filesystemLoaderPaths[] = $options["partialsPath"];
 		
 		// see if source/_macros exists. if so add it to be searchable
-		$macrosPath     = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
+		$macrosPath = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
 		if (is_dir($macrosPath)) {
-			$dirPaths[] = $macrosPath;
+			$filesystemLoaderPaths[] = $macrosPath;
 		}
 		
 		// see if source/_layouts exists. if so add it to be searchable
-		$layoutsPath    = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_layouts";
+		$layoutsPath = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_layouts";
 		if (is_dir($layoutsPath)) {
-			$dirPaths[] = $layoutsPath;
+			$filesystemLoaderPaths[] = $layoutsPath;
 		}
 		
 		// set-up Twig
-		$twigLoader     = new \Twig_Loader_Filesystem($dirPaths);
-		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		$twigLoader = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
+		$instance   = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
 		
 		// customize Twig
-		$this->instance = TwigUtil::loadFilters($this->instance);
-		$this->instance = TwigUtil::loadFunctions($this->instance);
-		$this->instance = TwigUtil::loadTags($this->instance);
-		$this->instance = TwigUtil::loadTests($this->instance);
-		$this->instance = TwigUtil::loadDateFormats($this->instance);
-		$this->instance = TwigUtil::loadDebug($this->instance);
-		$this->instance = TwigUtil::loadMacros($this->instance);
+		TwigUtil::setInstance($instance);
+		TwigUtil::loadFilters();
+		TwigUtil::loadFunctions();
+		TwigUtil::loadTags();
+		TwigUtil::loadTests();
+		TwigUtil::loadDateFormats();
+		TwigUtil::loadDebug();
+		TwigUtil::loadMacros();
+		
+		// set-up the dispatcher
+		$dispatcherInstance = Dispatcher::getInstance();
+		$dispatcherInstance->dispatch("twigLoader.customize");
+		$dispatcherInstance->dispatch("twigFilesystemLoader.customize");
+
+		// add node visitor
+		$this->instance = TwigUtil::getInstance();
 		
 	}
 	

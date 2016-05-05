@@ -13,6 +13,7 @@
 namespace PatternLab\PatternEngine\Twig\Loaders;
 
 use \PatternLab\Config;
+use \PatternLab\Dispatcher;
 use \PatternLab\PatternEngine\Loader;
 use \PatternLab\PatternEngine\Twig\TwigUtil;
 
@@ -24,43 +25,52 @@ class StringLoader extends Loader {
 	public function __construct($options = array()) {
 		
 		// set-up the defaults
-		$twigDebug      = Config::getOption("twigDebug");
+		$twigDebug = Config::getOption("twigDebug");
 		
-		// set-up the loader list
-		$loaders        = array();
+		// go through various places where things can exist
 		$filesystemLoaderPaths = array();
 		
 		// see if source/_macros exists
-		$macrosPath     = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
+		$macrosPath = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_macros";
 		if (is_dir($macrosPath)) {
 			$filesystemLoaderPaths[] = $macrosPath;
 		}
 		
 		// see if source/_layouts exists. if so add it to be searchable
-		$layoutsPath    = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_layouts";
+		$layoutsPath = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_layouts";
 		if (is_dir($layoutsPath)) {
 			$filesystemLoaderPaths[] = $layoutsPath;
 		}
 		
+		// set-up the loader list
+		$loaders = array();
 		// add the paths to the filesystem loader if the paths existed
 		if (count($filesystemLoaderPaths) > 0) {
-			$loaders[]  = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
+			$loaders[] = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
 		}
-		
-		$loaders[]      = new \Twig_Loader_String();
+		$loaders[] = new \Twig_Loader_String();
 		
 		// set-up Twig
-		$twigLoader     = new \Twig_Loader_Chain($loaders);
-		$this->instance = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		$twigLoader = new \Twig_Loader_Chain($loaders);
+		$instance   = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
 		
-		// customize the loader
-		$this->instance = TwigUtil::loadFilters($this->instance);
-		$this->instance = TwigUtil::loadFunctions($this->instance);
-		$this->instance = TwigUtil::loadTags($this->instance);
-		$this->instance = TwigUtil::loadTests($this->instance);
-		$this->instance = TwigUtil::loadDateFormats($this->instance);
-		$this->instance = TwigUtil::loadDebug($this->instance);
-		$this->instance = TwigUtil::loadMacros($this->instance);
+		// customize Twig
+		TwigUtil::setInstance($instance);
+		TwigUtil::loadFilters();
+		TwigUtil::loadFunctions();
+		TwigUtil::loadTags();
+		TwigUtil::loadTests();
+		TwigUtil::loadDateFormats();
+		TwigUtil::loadDebug();
+		TwigUtil::loadMacros();
+		
+		// set-up the dispatcher
+		$dispatcherInstance = Dispatcher::getInstance();
+		$dispatcherInstance->dispatch("twigLoader.customize");
+		$dispatcherInstance->dispatch("twigStringLoader.customize");
+
+		// add node visitor
+		$this->instance = TwigUtil::getInstance();
 		
 	}
 	

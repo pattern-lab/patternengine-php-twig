@@ -14,11 +14,12 @@ namespace PatternLab\PatternEngine\Twig;
 
 use \PatternLab\Config;
 use \PatternLab\Console;
+use \PatternLab\PatternEngine\Twig\PatternDataNodeVisitor;
 use \Symfony\Component\Finder\Finder;
 
 class TwigUtil {
 	
-	protected $instance    = '';
+	protected static $instance = '';
 	
 	/**
 	* Get an instance of the Twig environment
@@ -27,11 +28,11 @@ class TwigUtil {
 	*/
 	public static function getInstance() {
 		
-		if (empty($this->instance)) {
+		if (empty(self::$instance)) {
 			return false;
 		}
 		
-		return $this->instance;
+		return self::$instance;
 		
 	}
 	
@@ -45,7 +46,16 @@ class TwigUtil {
 			Console::writeError("please set the instance");
 		}
 		
-		$this->instance = $instance;
+		self::$instance = $instance;
+		
+	}
+	
+	/**
+	* Adds a node visitor
+	*/
+	public static function addNodeVisitor() {
+		
+		self::$instance->addNodeVisitor(new PatternDataNodeVisitor());
 		
 	}
 	
@@ -79,7 +89,7 @@ class TwigUtil {
 		$intervalFormat = Config::getOption("twigDefaultIntervalFormat");
 		
 		if ($dateFormat && $intervalFormat && !empty($dateFormat) && !empty($intervalFormat)) {
-			$this->instance->getExtension("core")->setDateFormat($dateFormat, $intervalFormat);
+			self::$instance->getExtension("core")->setDateFormat($dateFormat, $intervalFormat);
 		}
 		
 	}
@@ -90,7 +100,7 @@ class TwigUtil {
 	public static function loadDebug() {
 		
 		if (Config::getOption("twigDebug")) {
-			$this->instance->addExtension(new \Twig_Extension_Debug());
+			self::$instance->addExtension(new \Twig_Extension_Debug());
 		}
 		
 	}
@@ -121,7 +131,7 @@ class TwigUtil {
 					
 					// $filter should be defined in the included file
 					if (isset($filter)) {
-						$this->instance->addFilter($filter);
+						self::$instance->addFilter($filter);
 						unset($filter);
 					}
 					
@@ -159,7 +169,7 @@ class TwigUtil {
 					
 					// $function should be defined in the included file
 					if (isset($function)) {
-						$this->instance->addFunction($function);
+						self::$instance->addFunction($function);
 						unset($function);
 					}
 					
@@ -194,7 +204,7 @@ class TwigUtil {
 				if ($baseName[0] != "_") {
 					
 					// add the macro to the global context
-					$this->instance->addGlobal($file->getBasename(".".$macroExt), $this->instance->loadTemplate($baseName));
+					self::$instance->addGlobal($file->getBasename(".".$macroExt), self::$instance->loadTemplate($baseName));
 					
 				}
 				
@@ -230,7 +240,7 @@ class TwigUtil {
 					
 					// Project_{filenameBase}_TokenParser should be defined in the include
 					$className = "Project_".$file->getBasename(".".$tagExt)."_TokenParser";
-					$this->instance->addTokenParser(new $className());
+					self::$instance->addTokenParser(new $className());
 					
 				}
 				
@@ -266,7 +276,7 @@ class TwigUtil {
 					
 					// $test should be defined in the included file
 					if (isset($test)) {
-						$this->instance->addTest($test);
+						self::$instance->addTest($test);
 						unset($test);
 					}
 					
