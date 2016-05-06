@@ -14,7 +14,6 @@ namespace PatternLab\PatternEngine\Twig;
 
 use \PatternLab\Config;
 use \PatternLab\Console;
-use \PatternLab\PatternEngine\Twig\PatternDataNodeVisitor;
 use \Symfony\Component\Finder\Finder;
 
 class TwigUtil {
@@ -47,15 +46,6 @@ class TwigUtil {
 		}
 		
 		self::$instance = $instance;
-		
-	}
-	
-	/**
-	* Adds a node visitor
-	*/
-	public static function addNodeVisitor() {
-		
-		self::$instance->addNodeVisitor(new PatternDataNodeVisitor());
 		
 	}
 	
