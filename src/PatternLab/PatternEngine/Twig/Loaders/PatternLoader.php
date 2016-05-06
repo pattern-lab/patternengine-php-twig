@@ -93,7 +93,7 @@ class PatternLoader extends Loader {
 		$dispatcherInstance->dispatch("twigLoader.customize");
 		$dispatcherInstance->dispatch("twigPatternLoader.customize");
 
-		// add node visitor
+		// get the instance
 		$this->instance = TwigUtil::getInstance();
 		
 	}

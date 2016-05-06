@@ -69,7 +69,7 @@ class StringLoader extends Loader {
 		$dispatcherInstance->dispatch("twigLoader.customize");
 		$dispatcherInstance->dispatch("twigStringLoader.customize");
 
-		// add node visitor
+		// get the instance
 		$this->instance = TwigUtil::getInstance();
 		
 	}

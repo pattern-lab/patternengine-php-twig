@@ -63,7 +63,7 @@ class FilesystemLoader extends Loader {
 		$dispatcherInstance->dispatch("twigLoader.customize");
 		$dispatcherInstance->dispatch("twigFilesystemLoader.customize");
 
-		// add node visitor
+		// get the instance
 		$this->instance = TwigUtil::getInstance();
 		
 	}
