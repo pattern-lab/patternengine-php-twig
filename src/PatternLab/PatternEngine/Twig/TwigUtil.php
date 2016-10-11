@@ -61,7 +61,8 @@ class TwigUtil {
 		$finder = new Finder();
 		$finder->directories()->depth(0)->in($patternSourceDir);
 		foreach ($finder as $file) {
-			$patternBits = explode("-",$file->getRelativePathName(),2);
+			$pattern = $file->getRelativePathName();
+			$patternBits = explode("-",$pattern,2);
 			$patternTypePath = (((int)$patternBits[0] != 0) || ($patternBits[0] == '00')) ? $patternBits[1] : $pattern;
 			$filesystemLoader->addPath($file->getPathName(), $patternTypePath);
 		}
