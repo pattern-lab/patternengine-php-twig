@@ -116,7 +116,16 @@ class PatternLoader extends Loader {
 	*/
 	public function render($options = array()) {
 		
-		return $this->instance->render($options["pattern"], $options["data"]);
+		$result = $this->instance->render($options["pattern"], $options["data"]);
+		// This error handler catches files that didn't render using any of the loaders.
+		// The most common scenario is when a file's contents get passed to and through `Twig_Loader_String` and
+		// outputs the raw Twig file contents like `@atoms/buttons/button.twig`.
+		// @todo Remove this once `Twig_Loader_String` is removed.
+		if (strpos($result, "@") === 0) {
+			throw new \Twig_Error_Loader("Twig file not found: " . $result . "\n");
+		} else {
+			return $result;
+		}
 		
 	}
 	
