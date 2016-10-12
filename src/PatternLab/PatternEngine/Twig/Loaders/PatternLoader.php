@@ -122,7 +122,8 @@ class PatternLoader extends Loader {
 		// outputs the raw Twig file contents like `@atoms/buttons/button.twig`.
 		// @todo Remove this once `Twig_Loader_String` is removed.
 		if (strpos($result, "@") === 0) {
-			throw new \Twig_Error_Loader("Twig file not found: " . $result . "\n");
+			echo "Twig file not found: " . $result . "\n";
+			exit(1);
 		} else {
 			return $result;
 		}
