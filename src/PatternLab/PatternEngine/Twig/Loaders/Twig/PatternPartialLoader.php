@@ -38,7 +38,6 @@ class PatternPartialLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
 
 		// load some extra functions to help with manipulating pattern info
 		$this->patternUtil = new Util($options);
-
 	}
 
 	/**
@@ -122,7 +121,15 @@ class PatternPartialLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderI
 		} else {
 			array_unshift($this->paths[$namespace], $path);
 		}
+	}
 
+  /**
+	 * {@inheritdoc}
+	 */
+	public function getSourceContext($name) {
+		$path = $this->findTemplate($name);
+		$template = file_get_contents($path);
+		return new \Twig_Source($template, $name, $path);
 	}
 
 	/**

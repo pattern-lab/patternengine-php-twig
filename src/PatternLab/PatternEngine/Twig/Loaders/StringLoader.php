@@ -48,7 +48,7 @@ class StringLoader extends Loader {
 		if (count($filesystemLoaderPaths) > 0) {
 			$loaders[] = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
 		}
-		$loaders[] = new \Twig_Loader_String();
+		$loaders[] = new \Twig_Loader_Array();
 
 		// set-up Twig
 		$twigLoader = new \Twig_Loader_Chain($loaders);
@@ -81,9 +81,8 @@ class StringLoader extends Loader {
 	* @return {String}       the rendered result
 	*/
 	public function render($options = array()) {
-
-		return $this->instance->render($options["string"], $options["data"]);
-
+		$template = $this->instance->createTemplate($options["string"]);
+		return $template->render($options["data"]);
 	}
 
 }
