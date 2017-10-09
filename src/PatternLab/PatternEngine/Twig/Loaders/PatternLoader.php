@@ -84,7 +84,7 @@ class PatternLoader extends Loader {
 		// 3. add String loader
 		// This *must* go last or no loaders after will work ~ https://github.com/symfony/symfony/issues/10865
 		// @todo Remove `Twig_Loader_String` - if a Twig include path is wrong, this outputs the string anyway with no error ~ https://github.com/symfony/symfony/issues/10865
-		$loaders[] = new \Twig_Loader_String();
+		$loaders[] = new Twig\ConditionalStringLoader();
 		
 		// set-up Twig
 		$twigLoader = new \Twig_Loader_Chain($loaders);

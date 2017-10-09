@@ -48,7 +48,7 @@ class StringLoader extends Loader {
 		if (count($filesystemLoaderPaths) > 0) {
 			$loaders[] = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
 		}
-		$loaders[] = new \Twig_Loader_String();
+		$loaders[] = new Twig\ConditionalStringLoader();
 		
 		// set-up Twig
 		$twigLoader = new \Twig_Loader_Chain($loaders);
