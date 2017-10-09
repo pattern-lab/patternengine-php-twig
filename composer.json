@@ -14,9 +14,9 @@
 		}
 	],
 	"support": {
-		"issues":         "https://github.com/pattern-lab/patternengine-php-twig/issues",
+		"issues":         "https://github.com/drupal-pattern-lab/patternengine-php-twig/issues",
 		"wiki":           "http://patternlab.io/docs/",
-		"source":         "https://github.com/pattern-lab/patternengine-php-twig/releases"
+		"source":         "https://github.com/drupal-pattern-lab/patternengine-php-twig/releases"
 	},
 	"autoload": {
 		"psr-0": {
@@ -30,7 +30,7 @@
 	"extra": {
 		"patternlab": {
 			"config": {
-				"lineageMatch": "{%([ ]+)?include( |\\()[&quot;\\&#039;]([A-Za-z0-9-_]+)[&quot;\\&#039;](\\))?(.*)%}",
+				"lineageMatch": "{%([ ]+)?(?:include|extends|embed)( |\\()[&quot;\\&#039;]([\\/.@A-Za-z0-9-_]+)[&quot;\\&#039;]([\\s\\S+]*?)%}",
 				"lineageMatchKey": 3,
 				"patternExtension": "twig",
 				"twigDebug": false,
