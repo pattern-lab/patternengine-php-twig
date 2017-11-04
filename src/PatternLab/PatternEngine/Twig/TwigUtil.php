@@ -244,7 +244,51 @@ class TwigUtil {
 		}
 		
 	}
-	
+
+
+	/**
+	* Load Twig Globals for the Twig PatternEngine
+	*/
+	public static function loadGlobals() {
+
+		// load defaults
+		$globalDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_twig-components/globals";
+		$globalExt = Config::getOption("twigGlobalExt");
+		$globalExt = $globalExt ? $globalExt : "global.php";
+
+		if (is_dir($globalDir)) {
+
+			// loop through the global dir...
+			$finder = new Finder();
+			$finder->files()->name("*\.".$globalExt)->in($globalDir);
+			$finder->sortByName();
+			foreach ($finder as $file) {
+
+				// see if the file should be ignored or not
+				$baseName = $file->getBasename();
+				if ($baseName[0] != "_") {
+
+					include_once($file->getPathname());
+
+					$twigExtensionName = 'Twig_Extension_' . $file->getBasename('.' . $globalExt);
+					$twigExtensionName = str_replace('-', '_', $twigExtensionName); //Replace dashes with underscores for Class name
+
+					$extension = new $twigExtensionName('xyz');
+					$globals = $extension->getGlobals();
+
+					if (isset($globals)) {
+						// If global Twig values exist, loop through and add to Pattern Lab
+						foreach ($globals as $name => $value) {
+							self::$instance->addGlobal($name, $value);
+						}
+						unset($globals);
+					}
+				}
+			}
+		}
+	}
+
+
 	/**
 	* Load tags for the Twig PatternEngine
 	*/
