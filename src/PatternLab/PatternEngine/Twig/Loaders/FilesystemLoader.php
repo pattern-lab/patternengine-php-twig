@@ -52,6 +52,7 @@ class FilesystemLoader extends Loader {
 		TwigUtil::setInstance($instance);
 		TwigUtil::loadFilters();
 		TwigUtil::loadFunctions();
+		TwigUtil::loadGlobals();
 		TwigUtil::loadTags();
 		TwigUtil::loadTests();
 		TwigUtil::loadDateFormats();
