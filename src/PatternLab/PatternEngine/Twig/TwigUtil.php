@@ -50,6 +50,27 @@ class TwigUtil {
 
 	}
 
+  /**
+   * Load Custom Twig Extensions
+   * Looks in config for an array of strings that are classes that can be called and implements the interface `Twig_ExtensionInterface`
+   * Config example:
+   *   twigExtensions:
+   *     - '\MyProject\MyCustomTwigExtension'
+   * @link https://twig.symfony.com/doc/1.x/advanced.html#creating-an-extension
+   */
+  public static function loadCustomExtensions() {
+    $twigExtensions = Config::getOption("twigExtensions");
+    if ($twigExtensions) {
+      foreach ($twigExtensions as $twigExtension) {
+        if (class_exists($twigExtension)) {
+          self::$instance->addExtension(new $twigExtension());
+        } else {
+          Console::writeError("Your custom Twig Extension setting isn't a PHP class that exists: `" . $twigExtension . "`");
+        }
+      }
+    }
+  }
+
 	/**
 	* Get an instance of the Twig loaders
 	*

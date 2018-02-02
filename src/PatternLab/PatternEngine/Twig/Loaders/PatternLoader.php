@@ -92,6 +92,7 @@ class PatternLoader extends Loader {
 		
 		// customize Twig
 		TwigUtil::setInstance($instance);
+		TwigUtil::loadCustomExtensions();
 		TwigUtil::loadFilters();
 		TwigUtil::loadFunctions();
 		TwigUtil::loadTags();
