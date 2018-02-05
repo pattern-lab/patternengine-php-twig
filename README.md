@@ -342,7 +342,7 @@ foreach ($twigExtensions as $twigExtension) {
 
 If two Twig Extensions declare a function, filter, etc; the later ones override earlier ones. Any ones declared in Pattern Lab's `_twig-components` folder will override any declared using this method of custom Twig Extensions.
 
-For an example of how this works, see `ExampleTwigExtension.php` in this repo. You can enable it by adding this to your `config.yml`:
+For an example of how this works, see [`ExampleTwigExtension.php` in this repo](https://github.com/pattern-lab/patternengine-php-twig/blob/develop/src/PatternLab/PatternEngine/Twig/ExampleTwigExtension.php). You can enable it by adding this to your `config.yml`:
 
 ```yml
 twigExtensions:
