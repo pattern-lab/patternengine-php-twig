@@ -319,6 +319,52 @@ This tag would be used like this in a pattern:
 {{ name }}
 ```
 
+### Adding a custom Twig Extension
+
+A [Twig Extension](https://twig.symfony.com/doc/1.x/advanced.html#creating-an-extension) is a collection of Twig functions, filters, tags, globals, and tests all as a single bundle. This approach is more advanced than adding a single function or filter using the above method, but allows greater flexibility as the whole Twig Extension can be installed in multiple environments.
+
+To add a Twig Extension using the PHP class `\MyProject\MyCustomTwigExtension`, add this to `config.yml`:
+
+```yml
+twigExtensions:
+    - '\MyProject\MyCustomTwigExtension'
+```
+
+What happens under the hood is basically this:
+
+```php
+$twig = new Twig_Environment($loader);
+
+foreach ($twigExtensions as $twigExtension) {
+    $twig->addExtension(new $twigExtension());
+}
+```
+
+If two Twig Extensions declare a function, filter, etc; the later ones override earlier ones. Any ones declared in Pattern Lab's `_twig-components` folder will override any declared using this method of custom Twig Extensions.
+
+For an example of how this works, see `ExampleTwigExtension.php` in this repo. You can enable it by adding this to your `config.yml`:
+
+```yml
+twigExtensions:
+    - '\PatternLab\PatternEngine\Twig\ExampleTwigExtension'
+```
+
+Then place this in any Twig file:
+
+```twig
+<p>Testing: {{ testPlFunction('testing...') }}</p>
+```
+
+That function declaration looks like this in `ExampleTwigExtension.php`:
+
+```php
+new Twig_SimpleFunction('testPlFunction', function($arg) {
+    return 'Thanks for testing out the Pattern Lab Example Twig Extension with this arg: ' . $arg;
+}),
+```
+
+An incredible amount of exciting possibilities are enabled with this; have fun!
+
 ### Enable `dump()`
 
 To use `dump()` set `twigDebug` in `config/config.yml` to `true`.
