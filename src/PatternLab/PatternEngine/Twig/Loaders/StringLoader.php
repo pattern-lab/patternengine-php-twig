@@ -56,7 +56,9 @@ class StringLoader extends Loader {
 		
 		// customize Twig
 		TwigUtil::setInstance($instance);
-		TwigUtil::loadCustomExtensions();
+		// Disabling custom Twig Extensions for String loader as it is only used internally by PL
+		// TwigUtil::loadCustomExtensions();
+		// @todo Determine if any custom things should be loaded for this
 		TwigUtil::loadFilters();
 		TwigUtil::loadFunctions();
 		TwigUtil::loadTags();
