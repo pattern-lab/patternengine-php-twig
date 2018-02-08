@@ -50,7 +50,9 @@ class FilesystemLoader extends Loader {
 		
 		// customize Twig
 		TwigUtil::setInstance($instance);
-		TwigUtil::loadCustomExtensions();
+		// Disabling custom Twig Extensions for Filesystem loader as it is only used internally by PL for view all pages
+		// TwigUtil::loadCustomExtensions();
+		// @todo Determine if any custom things should be loaded for this
 		TwigUtil::loadFilters();
 		TwigUtil::loadFunctions();
 		TwigUtil::loadTags();
