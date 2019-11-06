@@ -333,7 +333,9 @@ twigExtensions:
 What happens under the hood is basically this:
 
 ```php
-$twig = new Twig_Environment($loader);
+// The $twigEnvironmentClass variable is set by the "twigEnvironmentClass" config value.
+// Defaults to \Twig_Environment.
+$twig = new $twigEnvironmentClass($loader);
 
 foreach ($twigExtensions as $twigExtension) {
     $twig->addExtension(new $twigExtension());

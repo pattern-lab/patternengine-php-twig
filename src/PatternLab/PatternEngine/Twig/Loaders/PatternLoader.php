@@ -87,8 +87,9 @@ class PatternLoader extends Loader {
 		$loaders[] = new \Twig_Loader_String();
 		
 		// set-up Twig
+		$twigEnvironmentClass = Config::getOption("twigEnvironmentClass");
 		$twigLoader = new \Twig_Loader_Chain($loaders);
-		$instance   = new \Twig_Environment($twigLoader, array("debug" => $twigDebug, "autoescape" => $twigAutoescape));
+		$instance   = new $twigEnvironmentClass($twigLoader, array("debug" => $twigDebug, "autoescape" => $twigAutoescape));
 		
 		// customize Twig
 		TwigUtil::setInstance($instance);
