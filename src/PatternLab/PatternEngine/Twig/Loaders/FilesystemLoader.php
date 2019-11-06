@@ -45,8 +45,9 @@ class FilesystemLoader extends Loader {
 		}
 		
 		// set-up Twig
+		$twigEnvironmentClass = Config::getOption("twigEnvironmentClass");
 		$twigLoader = new \Twig_Loader_Filesystem($filesystemLoaderPaths);
-		$instance   = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		$instance   = new $twigEnvironmentClass($twigLoader, array("debug" => $twigDebug));
 		
 		// customize Twig
 		TwigUtil::setInstance($instance);

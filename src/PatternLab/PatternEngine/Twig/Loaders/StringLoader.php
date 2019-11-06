@@ -51,8 +51,9 @@ class StringLoader extends Loader {
 		$loaders[] = new \Twig_Loader_String();
 		
 		// set-up Twig
+		$twigEnvironmentClass = Config::getOption("twigEnvironmentClass");
 		$twigLoader = new \Twig_Loader_Chain($loaders);
-		$instance   = new \Twig_Environment($twigLoader, array("debug" => $twigDebug));
+		$instance   = new $twigEnvironmentClass($twigLoader, array("debug" => $twigDebug));
 		
 		// customize Twig
 		TwigUtil::setInstance($instance);

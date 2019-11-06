@@ -37,6 +37,7 @@
 				"twigAutoescape": "html",
 				"twigDefaultDateFormat": "",
 				"twigDefaultIntervalFormat": "",
+				"twigEnvironmentClass": "\\Twig_Environment",
 				"twigMacroExt": "macro.twig",
 				"twigFilterExt": "filter.php",
 				"twigFunctionExt": "function.php",
