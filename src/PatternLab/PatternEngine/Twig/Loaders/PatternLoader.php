@@ -47,7 +47,7 @@ class PatternLoader extends Loader {
 		}
 
 		// add source/_patterns subdirectories for Drupal theme template compatibility
-		$patternSourceDir = Config::getOption("sourceDir").DIRECTORY_SEPARATOR."_patterns";
+		$patternSourceDir = Config::getOption("patternSourceDir");
 		$patternObjects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($patternSourceDir), \RecursiveIteratorIterator::SELF_FIRST);
 		$patternObjects->setFlags(\FilesystemIterator::SKIP_DOTS);
 
