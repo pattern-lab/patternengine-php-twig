@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> Pattern Lab is no longer actively maintained. All repositories, along with the rest of the @pattern-lab ecosystem on GitHub and npm, have been deprecated and archived. The code, releases, and history remain available so the work stays discoverable and forks can continue independently under the MIT license. No new releases, security patches, or issue triage will be performed.
+> [Read the full message](https://github.com/pattern-lab), and thank you.
+
 # Twig PatternEngine for Pattern Lab
 
 The Twig PatternEngine allows you to use [Twig](http://twig.sensiolabs.org) as the template language for Pattern Lab PHP. Once the PatternEngine is installed you can use Twig-based StarterKits and StyleguideKits.
